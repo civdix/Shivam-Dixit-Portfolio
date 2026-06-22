@@ -10,7 +10,6 @@ import Markdown from "react-markdown";
 
 function ProjectImage({ src, alt }: { src: string; alt: string }) {
   const [imageError, setImageError] = useState(false);
-
   if (!src || imageError) {
     return <div className="w-full h-48 bg-muted" />;
   }
@@ -68,7 +67,19 @@ export function ProjectCard({
           rel="noopener noreferrer"
           className="block"
         >
-          {video ? (
+          {image ? (
+            <ProjectImage src={image} alt={title} />
+          ) : href && href.startsWith("http") && !href.includes("github.com") ? (
+            <div className="w-full h-48 overflow-hidden relative bg-muted/20">
+              <iframe
+                src={href}
+                className="w-[125%] h-[125%] border-0 pointer-events-none select-none scale-[0.8] origin-top-left"
+                title={title}
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-transparent" />
+            </div>
+          ) : video ? (
             <video
               src={video}
               autoPlay
@@ -77,10 +88,10 @@ export function ProjectCard({
               playsInline
               className="w-full h-48 object-cover"
             />
-          ) : image ? (
-            <ProjectImage src={image} alt={title} />
           ) : (
-            <div className="w-full h-48 bg-muted" />
+            <div className="w-full h-48 bg-muted flex items-center justify-center text-muted-foreground text-xs font-mono">
+              [No Live Preview]
+            </div>
           )}
         </Link>
         {links && links.length > 0 && (

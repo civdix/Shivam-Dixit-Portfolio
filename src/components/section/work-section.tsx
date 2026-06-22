@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -8,7 +8,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { DATA } from "@/data/resume";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 function LogoImage({ src, alt }: { src: string; alt: string }) {
@@ -31,57 +31,208 @@ function LogoImage({ src, alt }: { src: string; alt: string }) {
 }
 
 export default function WorkSection() {
+  const [openItems, setOpenItems] = useState<string[]>([DATA.work[0]?.company || ""]);
+  const itemRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+  const isManualClick = useRef(false);
+  const clickTimeout = useRef<NodeJS.Timeout | null>(null);
+  const prevPositionsRef = useRef<Map<string, { height: number; bottom: number }>>(new Map());
+
+  const handleValueChange = (val: string[]) => {
+    isManualClick.current = true;
+    setOpenItems(val);
+    if (clickTimeout.current) clearTimeout(clickTimeout.current);
+    clickTimeout.current = setTimeout(() => {
+      isManualClick.current = false;
+    }, 800);
+  };
+
+  useLayoutEffect(() => {
+    if (isManualClick.current || prevPositionsRef.current.size === 0) {
+      return;
+    }
+
+    const topThreshold = 80;
+    let totalAdjustment = 0;
+
+    prevPositionsRef.current.forEach((prev, company) => {
+      const node = itemRefs.current.get(company);
+      if (node) {
+        const newHeight = node.offsetHeight;
+        const diff = prev.height - newHeight;
+
+        // If the height changed and the element was above/at the top viewport threshold
+        if (diff !== 0 && prev.bottom <= topThreshold + 10) {
+          totalAdjustment += diff;
+        }
+      }
+    });
+
+    if (totalAdjustment !== 0) {
+      window.scrollBy(0, -totalAdjustment);
+    }
+
+    prevPositionsRef.current.clear();
+  }, [openItems]);
+
+  useEffect(() => {
+    let lastScrollTop = window.scrollY;
+
+    const handleScroll = () => {
+      if (isManualClick.current) {
+        lastScrollTop = window.scrollY;
+        return;
+      }
+
+      const scrollTop = window.scrollY;
+      const isDown = scrollTop > lastScrollTop;
+      lastScrollTop = scrollTop;
+
+      const topThreshold = 80;
+      const viewportHeight = window.innerHeight;
+
+      // Get current rects of all items
+      const items = DATA.work.map((w) => {
+        const node = itemRefs.current.get(w.company);
+        return {
+          company: w.company,
+          rect: node ? node.getBoundingClientRect() : null,
+        };
+      });
+
+      let nextOpenItems = [...openItems];
+      let stateChanged = false;
+
+      if (isDown) {
+        // Scrolling down
+        for (let i = 0; i < items.length; i++) {
+          const item = items[i];
+          if (!item.rect) continue;
+
+          // If this item is currently open
+          if (nextOpenItems.includes(item.company)) {
+            // 1. If half of this item's content goes out of the top of the viewport, show the next one
+            const hasScrolledHalfOut = item.rect.top + item.rect.height / 2 <= topThreshold;
+            if (hasScrolledHalfOut && i < items.length - 1) {
+              const nextCompany = items[i + 1].company;
+              if (!nextOpenItems.includes(nextCompany)) {
+                nextOpenItems.push(nextCompany);
+                stateChanged = true;
+              }
+            }
+          }
+        }
+      } else {
+        // Scrolling up
+        for (let i = items.length - 1; i >= 0; i--) {
+          const item = items[i];
+          if (!item.rect) continue;
+
+          // If this item is closed, but its bottom comes back into the viewport (bottom > topThreshold)
+          // and it is the item above the current open items
+          if (!nextOpenItems.includes(item.company)) {
+            const isEnteringFromTop = item.rect.bottom > topThreshold && item.rect.top < viewportHeight;
+            if (isEnteringFromTop) {
+              const hasOpenBelow = items.slice(i + 1).some(belowItem => nextOpenItems.includes(belowItem.company));
+              if (hasOpenBelow) {
+                nextOpenItems.push(item.company);
+                stateChanged = true;
+              }
+            }
+          }
+        }
+      }
+
+      if (stateChanged) {
+        // Ensure at least one item remains open
+        if (nextOpenItems.length === 0) {
+          nextOpenItems = [DATA.work[0].company];
+        }
+
+        // Record current positions before applying the state update
+        const currentPositions = new Map<string, { height: number; bottom: number }>();
+        DATA.work.forEach((w) => {
+          const node = itemRefs.current.get(w.company);
+          if (node) {
+            currentPositions.set(w.company, {
+              height: node.offsetHeight,
+              bottom: node.getBoundingClientRect().bottom,
+            });
+          }
+        });
+        prevPositionsRef.current = currentPositions;
+
+        setOpenItems(nextOpenItems);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (clickTimeout.current) clearTimeout(clickTimeout.current);
+    };
+  }, [openItems]);
+
   return (
-    <Accordion type="single" collapsible className="w-full grid gap-6">
+    <Accordion
+      type="multiple"
+      value={openItems}
+      onValueChange={handleValueChange}
+      className="w-full grid gap-6"
+    >
       {DATA.work.map((work) => (
-        <AccordionItem
+        <div
           key={work.company}
-          value={work.company}
-          className="w-full border-b-0 grid gap-2"
+          ref={(el) => {
+            if (el) {
+              itemRefs.current.set(work.company, el);
+            } else {
+              itemRefs.current.delete(work.company);
+            }
+          }}
+          className="scroll-mt-20"
         >
-          <AccordionTrigger className="hover:no-underline p-0 cursor-pointer transition-colors rounded-none group [&>svg]:hidden">
-            <div className="flex items-center gap-x-3 justify-between w-full text-left">
-              <div className="flex items-center gap-x-3 flex-1 min-w-0">
-                <LogoImage src={work.logoUrl} alt={work.company} />
-                <div className="flex-1 min-w-0 gap-0.5 flex flex-col">
-                  <div className="font-semibold leading-none flex items-center gap-2">
-                    {work.company}
-                    <span className="relative inline-flex items-center w-3.5 h-3.5">
-                      <ChevronRight
-                        className={cn(
-                          "absolute h-3.5 w-3.5 shrink-0 text-muted-foreground stroke-2 transition-all duration-300 ease-out",
-                          "translate-x-0 opacity-0",
-                          "group-hover:translate-x-1 group-hover:opacity-100",
-                          "group-data-[state=open]:opacity-0 group-data-[state=open]:translate-x-0"
-                        )}
-                      />
-                      <ChevronDown
-                        className={cn(
-                          "absolute h-3.5 w-3.5 shrink-0 text-muted-foreground stroke-2 transition-all duration-200",
-                          "opacity-0 rotate-0",
-                          "group-data-[state=open]:opacity-100 group-data-[state=open]:rotate-180"
-                        )}
-                      />
-                    </span>
-                  </div>
-                  <div className="font-sans text-sm text-muted-foreground">
-                    {work.title}
+          <AccordionItem
+            value={work.company}
+            className="w-full border-b-0 grid gap-2"
+          >
+            <AccordionTrigger className="hover:no-underline p-0 cursor-pointer transition-colors rounded-none group [&>svg]:hidden">
+              <div className="flex items-center gap-x-3 justify-between w-full text-left">
+                <div className="flex items-center gap-x-3 flex-1 min-w-0">
+                  <LogoImage src={work.logoUrl} alt={work.company} />
+                  <div className="flex-1 min-w-0 gap-0.5 flex flex-col">
+                    <div className="font-semibold leading-none flex items-center gap-2">
+                      {work.company}
+                    </div>
+                    <div className="font-sans text-sm text-muted-foreground">
+                      {work.title}
+                    </div>
                   </div>
                 </div>
+                <div className="flex items-center gap-3 text-xs sm:text-sm tabular-nums text-muted-foreground text-right flex-none">
+                  <span>
+                    {work.start} - {work.end ?? "Present"}
+                  </span>
+                  <ChevronDown 
+                    className={cn(
+                      "h-4 w-4 text-muted-foreground transition-transform duration-300 ease-in-out flex-none",
+                      openItems.includes(work.company) && "rotate-180"
+                    )}
+                  />
+                </div>
               </div>
-              <div className="flex items-center gap-1 text-xs tabular-nums text-muted-foreground text-right flex-none">
-                <span>
-                  {work.start} - {work.end ?? "Present"}
-                </span>
-              </div>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="p-0 ml-13 text-xs sm:text-sm text-muted-foreground">
-            {work.description}
-          </AccordionContent>
-        </AccordionItem>
+            </AccordionTrigger>
+            <AccordionContent className="p-0 ml-11 md:ml-13 text-xs sm:text-sm text-muted-foreground data-[state=open]:animate-none! data-[state=closed]:animate-none!">
+              <ul className="list-disc pl-4 space-y-1.5 mt-2">
+                {work.description.map((point, idx) => (
+                  <li key={idx} className="leading-relaxed">
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </AccordionContent>
+          </AccordionItem>
+        </div>
       ))}
     </Accordion>
   );
 }
-
