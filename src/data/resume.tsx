@@ -272,7 +272,7 @@ export const DATA = {
           icon: <Icons.github className="size-3" />,
         },
       ],
-      image: "",
+      image: "/studmart.png",
       video: "",
     },
     {
@@ -359,8 +359,8 @@ export const DATA = {
           icon: <Icons.github className="size-3" />,
         },
       ],
-      image: "",
-      video: "",
+      image: "/sharing&caringCalc.png",
+      video: "https://www.youtube.com/watch?v=QbtuedakTkw&list=PLuBu7ekp-O1V7VmWJNqKCarEVeIf9EATd&index=2",
     }
   ],
   achievements: [
