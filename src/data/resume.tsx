@@ -335,11 +335,6 @@ export const DATA = {
           href: "https://github.com/civdix/MiniProject-RitualGuru",
           icon: <Icons.github className="size-3" />,
         },
-        {
-          type: "Youtube",
-          href: "https://youtube.com/playlist?list=PLuBu7ekp-O1V7VmWJNqKCarEVeIf9EATd&si=55wP2uUcC4ghg1o7",
-          icon: <Icons.youtube className="size-3" />,
-        },
       ],
       image: "/palmy_preview.png",
       video: "",
@@ -358,6 +353,11 @@ export const DATA = {
           href: "https://github.com/civdix/sharingCalc",
           icon: <Icons.github className="size-3" />,
         },
+        {
+          type: "Youtube",
+          href: "https://www.youtube.com/watch?v=QbtuedakTkw&list=PLuBu7ekp-O1V7VmWJNqKCarEVeIf9EATd&index=2",
+          icon: <Icons.youtube className="size-3" />,
+        }
       ],
       image: "/Sharing&caringCalc.png",
       video: "https://www.youtube.com/watch?v=QbtuedakTkw&list=PLuBu7ekp-O1V7VmWJNqKCarEVeIf9EATd&index=2",
