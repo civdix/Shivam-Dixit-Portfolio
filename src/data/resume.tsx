@@ -359,7 +359,7 @@ export const DATA = {
           icon: <Icons.github className="size-3" />,
         },
       ],
-      image: "/sharing&caringCalc.png",
+      image: "/Sharing&caringCalc.png",
       video: "https://www.youtube.com/watch?v=QbtuedakTkw&list=PLuBu7ekp-O1V7VmWJNqKCarEVeIf9EATd&index=2",
     }
   ],
