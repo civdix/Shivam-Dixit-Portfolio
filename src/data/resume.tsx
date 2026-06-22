@@ -26,7 +26,7 @@ export const DATA = {
   avatarUrl: "/ShivamDixit.png",
   skills: {
     "Languages": [
-      { name: "JavaScript", icon: Typescript },
+      { name: "JavaScript", icon: (props: any) => <img src="/javascript.png" alt="JavaScript" className="size-4 object-contain rounded" {...props} /> },
       { name: "TypeScript", icon: Typescript },
       { name: "Python", icon: Python },
       { name: "Java", icon: Java },
