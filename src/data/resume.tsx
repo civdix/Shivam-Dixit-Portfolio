@@ -109,7 +109,7 @@ export const DATA = {
       },
       GeeksForGeeks: {
         name: "GeeksforGeeks",
-        url: "https://www.geeksforgeeks.org/user/shivamdixit11/",
+        url: "https://www.geeksforgeeks.org/profile/shivamdixit11?tab=activity",
         icon: Icons.geeksforgeeks,
         navbar: true,
       },
@@ -379,7 +379,7 @@ export const DATA = {
         {
           title: "GeeksforGeeks",
           icon: <Icons.globe className="h-4 w-4" />,
-          href: "https://www.geeksforgeeks.org/user/shivamdixit11/",
+          href: "https://www.geeksforgeeks.org/profile/shivamdixit11?tab=activity",
         },
       ],
     },
