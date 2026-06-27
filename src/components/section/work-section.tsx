@@ -10,6 +10,8 @@ import {
 import { DATA } from "@/data/resume";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { TechIcon } from "@/components/tech-icon";
 
 function LogoImage({ src, alt }: { src: string; alt: string }) {
   const [imageError, setImageError] = useState(false);
@@ -222,6 +224,20 @@ export default function WorkSection() {
               </div>
             </AccordionTrigger>
             <AccordionContent className="p-0 ml-11 md:ml-13 text-xs sm:text-sm text-muted-foreground data-[state=open]:animate-none! data-[state=closed]:animate-none!">
+              {work.badges && work.badges.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mt-2 mb-3">
+                  {work.badges.map((badge) => (
+                    <Badge
+                      key={badge}
+                      className="text-[11px] font-medium border border-border h-6 w-fit px-2 py-0 flex items-center gap-1.5 bg-background text-foreground hover:bg-muted/50"
+                      variant="outline"
+                    >
+                      <TechIcon name={badge} className="size-3.5 object-contain rounded-xs" />
+                      <span>{badge}</span>
+                    </Badge>
+                  ))}
+                </div>
+              )}
               <ul className="list-disc pl-4 space-y-1.5 mt-2">
                 {work.description.map((point, idx) => (
                   <li key={idx} className="leading-relaxed">

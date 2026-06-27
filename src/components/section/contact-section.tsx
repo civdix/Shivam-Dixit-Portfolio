@@ -1,8 +1,25 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import { FlickeringGrid } from "@/components/magicui/flickering-grid";
 import { DATA } from "@/data/resume";
 
 export default function ContactSection() {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    const resumeUrl = DATA.contact.resumeUrl || "/resume.pdf";
+    const fullUrl = typeof window !== "undefined"
+      ? `${window.location.origin}${resumeUrl}`
+      : resumeUrl;
+
+    navigator.clipboard.writeText(fullUrl).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+
   return (
     <div className="border rounded-xl p-10 relative">
       <div className="absolute -top-4 border bg-primary z-10 rounded-xl px-4 py-1 left-1/2 -translate-x-1/2">
@@ -51,8 +68,27 @@ export default function ContactSection() {
             <span>📞</span> {DATA.contact.tel}
           </a>
         </div>
+
+        {/* Resume pills */}
+        <div className="flex flex-col sm:flex-row items-center gap-3 mt-4 justify-center text-sm font-medium">
+          <a
+            href={DATA.contact.resumeLocation || "/resume.pdf"}
+            download={"Shivam_Dixit_Resume.pdf"}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 border bg-primary hover:bg-primary/90 text-background px-4 py-1.5 rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+          >
+            <span>📄</span> Download Resume
+          </a>
+          <span className="text-xs text-muted-foreground/60 font-semibold uppercase">or</span>
+          <button
+            onClick={handleCopy}
+            className="inline-flex items-center gap-2 border bg-background border-border hover:bg-muted text-foreground px-4 py-1.5 rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+          >
+            <span>🔗</span> {copied ? "Copied!" : "Copy Resume Link"}
+          </button>
+        </div>
       </div>
     </div>
   );
 }
-

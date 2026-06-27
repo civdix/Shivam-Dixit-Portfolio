@@ -1,17 +1,5 @@
 import { Icons } from "@/components/icons";
 import { HomeIcon, NotebookIcon } from "lucide-react";
-import { ReactLight } from "@/components/ui/svgs/reactLight";
-import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
-import { Typescript } from "@/components/ui/svgs/typescript";
-import { Nodejs } from "@/components/ui/svgs/nodejs";
-import { Python } from "@/components/ui/svgs/python";
-import { Golang } from "@/components/ui/svgs/golang";
-import { Postgresql } from "@/components/ui/svgs/postgresql";
-import { Docker } from "@/components/ui/svgs/docker";
-import { Kubernetes } from "@/components/ui/svgs/kubernetes";
-import { Java } from "@/components/ui/svgs/java";
-import { Csharp } from "@/components/ui/svgs/csharp";
-import { RAG } from "@/components/ui/svgs/RAG";
 
 export const DATA = {
   name: "Shivam Dixit",
@@ -20,65 +8,73 @@ export const DATA = {
   location: "Noida, Uttar Pradesh",
   locationLink: "https://www.google.com/maps/place/Noida,+Uttar+Pradesh",
   description:
-    "Full Stack Software Engineer specializing in building scalable applications, distributed systems, and AI solutions.",
+    "AI Software Engineer specializing in building scalable applications, distributed systems, and AI solutions.",
   summary:
-    "Full Stack Software Engineer with experience building scalable applications using Node.js, Django REST Framework, React.js, Next.js, PostgreSQL, Redis, and AWS. Worked on large-scale systems at GeeksforGeeks handling 20M+ daily traffic, with hands-on experience in REST APIs, distributed systems, Docker, real-time communication, and AI-based solutions using GPT & RAG pipelines.",
+    "AI Software Engineer with experience building scalable applications using Node.js, Django REST Framework, React.js, Next.js, PostgreSQL, Redis, and AWS. Worked on large-scale systems at GeeksforGeeks handling 20M+ daily traffic, with hands-on experience in REST APIs, distributed systems, Docker, real-time communication, and AI-based solutions using GPT & RAG pipelines. currently working at Surepass, building an AIaaS (AI-as-a-Service) platform",
   avatarUrl: "/ShivamDixit.png",
   skills: {
     "Languages": [
-      { name: "JavaScript", icon: (props: any) => <img src="/javascript.png" alt="JavaScript" className="size-4 object-contain rounded" {...props} /> },
-      { name: "TypeScript", icon: Typescript },
-      { name: "Python", icon: Python },
-      { name: "Java", icon: Java },
-      { name: "PostgreSQL", icon: Postgresql },
-      { name: "MySQL", icon: (props: any) => <img src="/mysql_logo.png" alt="MySQL" className="size-4 object-contain rounded" {...props} /> },
-      { name: "HTML5", icon: (props: any) => <img src="/html5_logo.png" alt="HTML5" className="size-4 object-contain rounded" {...props} /> },
-      { name: "CSS3", icon: (props: any) => <img src="/css3_logo.png" alt="CSS3" className="size-4 object-contain rounded" {...props} /> }
+      { name: "JavaScript" },
+      { name: "TypeScript" },
+      { name: "Python" },
+      { name: "Java" },
+      { name: "SQL" },
     ],
     "Frontend": [
-      { name: "React", icon: ReactLight },
-      { name: "Next.js", icon: NextjsIconDark },
-      { name: "Redux", icon: (props: any) => <img src="/redux_logo.png" alt="Redux" className="size-4 object-contain rounded" {...props} /> },
-      { name: "Tailwind CSS", icon: Icons.tailwindcss },
-      { name: "D3.js", icon: (props: any) => <img src="/d3_logo.png" alt="D3" className="size-4 object-contain rounded" {...props} /> },
-      { name: "Single Page Apps (SPA)", icon: undefined },
-      { name: "Server-Side Rendering (SSR)", icon: undefined }
+      { name: "React" },
+      { name: "Next.js" },
+      { name: "Redux" },
+      { name: "Tailwind CSS" },
+      { name: "D3.js" },
+      { name: "React Native" },
+      { name: "Vue.js" },
+      { name: "VueFlow" },
+      { name: "HTML5" },
+      { name: "CSS3" },
+      { name: "Single Page Apps (SPA)" },
+      { name: "Server-Side Rendering (SSR)" },
     ],
     "Backend": [
-      { name: "Node.js", icon: Nodejs },
-      { name: "Express.js", icon: Nodejs },
-      { name: "Django REST Framework", icon: (props: any) => <img src="/drf_logo.png" alt="DRF" className="size-4 object-contain rounded" {...props} /> },
-      { name: "Celery", icon: Python },
-      { name: "REST APIs", icon: (props: any) => <img src="/restapi_logo.png" alt="REST APIs" className="size-4 object-contain rounded" {...props} /> },
-      { name: "WebSockets", icon: undefined },
-      { name: "WebRTC / Agora", icon: (props: any) => <img src="/agora_logo.png" alt="Agora" className="size-4 object-contain rounded" {...props} /> },
-      { name: "Socket.IO", icon: (props: any) => <img src="/socketio_logo.png" alt="Socket.IO" className="size-4 object-contain rounded" {...props} /> },
-      { name: "JWT & Bcrypt", icon: (props: any) => <img src="/jwt_logo.png" alt="JWT" className="size-4 object-contain rounded" {...props} /> },
-      { name: "API Rate Limiting", icon: undefined }
+      { name: "Node.js" },
+      { name: "Express.js" },
+      { name: "Django REST Framework" },
+      { name: "Celery" },
+      { name: "REST APIs" },
+      { name: "WebSockets" },
+      { name: "WebRTC / Agora" },
+      { name: "Socket.IO" },
+      { name: "JWT & Bcrypt" },
+      { name: "SQLAlchemy" },
+      { name: "Fast API" },
+      { name: "Temporal" },
+      { name: "Pydantic" },
+      { name: "API Rate Limiting" }
     ],
     "Databases & Caching": [
-      { name: "PostgreSQL", icon: Postgresql },
-      { name: "MySQL", icon: (props: any) => <img src="/mysql_logo.png" alt="MySQL" className="size-4 object-contain rounded" {...props} /> },
-      { name: "MongoDB", icon: (props: any) => <img src="/mongodb_logo.png" alt="MongoDB" className="size-4 object-contain rounded" {...props} /> },
-      { name: "Redis", icon: (props: any) => <img src="/redis_logo.png" alt="Redis" className="size-4 object-contain rounded" {...props} /> },
-      // { name: "DynamoDB", icon: undefined },
-      { name: "Elasticsearch", icon: (props: any) => <img src="/elasticsearch_logo.png" alt="Elasticsearch" className="size-4 object-contain rounded" {...props} /> },
-      { name: "CDN Caching (CloudFront)", icon: (props: any) => <img src="/cloudfront_logo.png" alt="CloudFront" className="size-4 object-contain rounded" {...props} /> }
+      { name: "PostgreSQL" },
+      { name: "MySQL" },
+      { name: "MongoDB" },
+      { name: "Redis" },
+      { name: "Elasticsearch" },
+      { name: "MinIO" },
+      { name: "CDN Caching (CloudFront)" }
     ],
     "AI / ML": [
-      { name: "OpenAI GPT APIs", icon: Icons.openai },
-      { name: "RAG Pipelines", icon: RAG },
-      { name: "AI Agents", icon: Icons.openai },
-      { name: "OpenCV", icon: (props: any) => <img src="/opencv_logo.png" alt="OpenCV" className="size-4 object-contain rounded" {...props} /> },
-      { name: "MediaPipe", icon: Python }
+      { name: "OpenAI GPT APIs" },
+      { name: "RAG Pipelines" },
+      { name: "AI Agents" },
+      { name: "OpenCV" },
+      { name: "MediaPipe" }
     ],
     "DevOps & Tools": [
-      { name: "AWS (S3, CloudFront, SQS, EC2, RDS, IAM)", icon: (props: any) => <img src="/aws_logo.png" alt="AWS" className="size-4 object-contain rounded" {...props} /> },
-      // { name: "AWS EKS", icon: Kubernetes },
-      { name: "Docker", icon: Docker },
-      { name: "N8N Automation", icon: (props: any) => <img src="/n8n_logo.png" alt="n8n" className="size-4 object-contain rounded" {...props} /> },
-      { name: "Linux", icon: (props: any) => <img src="/linux_logo.png" alt="Linux" className="size-4 object-contain rounded" {...props} /> },
-      { name: "Git", icon: Icons.github }
+      { name: "AWS (S3, CloudFront, SQS, EC2, RDS, IAM)" },
+      { name: "AWS EKS" },
+      { name: "Docker" },
+      { name: "N8N Automation" },
+      { name: "Linux" },
+      { name: "Git" },
+      { name: "GitHub" },
+      { name: "BitBucket" }
     ]
   },
   navbar: [
@@ -88,6 +84,8 @@ export const DATA = {
   contact: {
     email: "dixitshivam249@gmail.com",
     tel: "+919720965985",
+    resumeLocation: "/resume.pdf",
+    resumeUrl: "https://drive.google.com/file/d/1o8uC-yV_7_GfM3p2gH_3B81674wO8DkF/view?usp=sharing",
     social: {
       GitHub: {
         name: "GitHub",
@@ -119,18 +117,37 @@ export const DATA = {
         icon: Icons.email,
         navbar: false,
       },
+      Whatsapp: {
+        name: "Whatsapp",
+        url: "https://wa.me/+919720965985",
+        icon: Icons.whatsapp,
+        navbar: true,
+      }
     },
   },
   work: [
     {
+      company: "Surepass",
+      href: "https://surepass.io/",
+      badges: ["Fast API", "PostgreSQL", "Redis", "Vue.js", "Temporal", "Pydantic", "MinIO", "VueFlow"],
+      location: "North West Delhi, Delhi, India",
+      title: "Software Engineer",
+      logoUrl: "/surepass_logo.png",
+      start: "June 2026",
+      end: "Present",
+      description: [
+        "Developing a AIaaS (AI as a Service) Platform for Automating support and communication workflow for enterprises with their customers",
+      ],
+    },
+    {
       company: "GeeksforGeeks",
       href: "https://www.geeksforgeeks.org",
-      badges: ["DRF", "PostgreSQL", "Redis", "Elasticsearch", "Agora"],
+      badges: ["DRF", "PostgreSQL", "Redis", "Elasticsearch", "Agora", "AWS (S3, CloudFront, SQS, EC2, RDS, IAM)", "Next.js", "Celery", "CloudFront", "Unix/Linux", "Git", "BitBucket", "Tailwind CSS",],
       location: "Noida, India",
       title: "Software Development Engineer Intern",
       logoUrl: "/gfg_logo.png",
       start: "Nov 2025",
-      end: "Present",
+      end: "June 2026",
       description: [
         "Developing scalable backend for GfG Connect using DRF for 20 Million+ Users worldwide with PostgreSQL.",
         "Contributed to Elasticsearch-based search optimization for GfG Connect.",
@@ -144,7 +161,7 @@ export const DATA = {
     {
       company: "Seoulix Technologies",
       href: "https://seoulix.com",
-      badges: ["Next.js", "n8n", "OpenAI", "RAG", "Docker", "EC2"],
+      badges: ["Next.js", "n8n", "OpenAI", "RAG", "Docker", "EC2", "ExpressJS", "AWS"],
       location: "Gurugram, India",
       title: "Software Development Engineer Intern",
       logoUrl: "/seoulix_logo.png",
@@ -159,7 +176,7 @@ export const DATA = {
     {
       company: "Ritual Gurus",
       href: "#",
-      badges: ["AWS EKS", "OpenCV", "MediaPipe", "Python", "API Rate Limiting"],
+      badges: ["AWS EKS", "OpenCV", "MediaPipe", "Python", "API Rate Limiting", "React Native"],
       location: "Panighat Parikrama Marg, Vrindavan, India",
       title: "Full Stack Developer Intern",
       logoUrl: "/ritualguru_logo.png",

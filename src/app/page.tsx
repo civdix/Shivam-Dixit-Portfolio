@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import BlurFade from "@/components/magicui/blur-fade";
 import BlurFadeText from "@/components/magicui/blur-fade-text";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -10,6 +9,7 @@ import AchievementsSection from "@/components/section/achievements-section";
 import ProjectsSection from "@/components/section/projects-section";
 import WorkSection from "@/components/section/work-section";
 import { ArrowUpRight } from "lucide-react";
+import TechIcon from "@/components/tech-icon";
 
 const BLUR_FADE_DELAY = 0.04;
 
@@ -39,7 +39,7 @@ export default function Page() {
                   </div>
                   <div className="flex items-center gap-2">
                     <span role="img" aria-label="current" className="text-base flex-shrink-0">📍</span>
-                    <span><strong>Current Address:</strong> Noida, Sector 135 Wazidpur, UP, India</span>
+                    <span><strong>Current Address:</strong> North West Delhi, Delhi, India</span>
                   </div>
                 </div>
               </BlurFade>
@@ -142,15 +142,12 @@ export default function Page() {
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {skills.map((skill, skillIndex) => {
-                      const Icon = skill.icon;
                       return (
                         <div
                           key={skill.name}
                           className="border bg-background border-border ring-2 ring-border/5 hover:ring-border/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 rounded-xl h-8 w-fit px-3 flex items-center gap-2"
                         >
-                          {Icon && (
-                            <Icon className="size-4 rounded overflow-hidden object-contain flex-shrink-0" />
-                          )}
+                          <TechIcon name={skill.name} className="size-4 rounded overflow-hidden object-contain flex-shrink-0" />
                           <span className="text-foreground text-xs md:text-sm font-medium">
                             {skill.name}
                           </span>

@@ -7,6 +7,7 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import Markdown from "react-markdown";
+import { TechIcon } from "@/components/tech-icon";
 
 function ProjectImage({ src, alt }: { src: string; alt: string }) {
   const [imageError, setImageError] = useState(false);
@@ -140,10 +141,11 @@ export function ProjectCard({
             {tags.map((tag) => (
               <Badge
                 key={tag}
-                className="text-[11px] font-medium border border-border h-6 w-fit px-2"
+                className="text-[11px] font-medium border border-border h-6 w-fit px-2 py-0 flex items-center gap-1.5"
                 variant="outline"
               >
-                {tag}
+                <TechIcon name={tag} className="size-3.5 object-contain" />
+                <span>{tag}</span>
               </Badge>
             ))}
           </div>
