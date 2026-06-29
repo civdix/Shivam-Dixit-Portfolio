@@ -122,6 +122,12 @@ export const DATA = {
         url: "https://wa.me/+919720965985",
         icon: Icons.whatsapp,
         navbar: true,
+      },
+      Youtube: {
+        name: "Youtube",
+        url: "https://www.youtube.com/@shivdix",
+        icon: Icons.youtube,
+        navbar: true,
       }
     },
   },

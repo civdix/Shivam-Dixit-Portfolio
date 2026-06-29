@@ -10,6 +10,7 @@ import ProjectsSection from "@/components/section/projects-section";
 import WorkSection from "@/components/section/work-section";
 import { ArrowUpRight } from "lucide-react";
 import TechIcon from "@/components/tech-icon";
+import YoutubeSection from "@/components/section/youtube-section";
 
 const BLUR_FADE_DELAY = 0.04;
 
@@ -18,16 +19,34 @@ export default function Page() {
     <main className="min-h-dvh flex flex-col gap-14 relative">
       <section id="hero">
         <div className="mx-auto w-full max-w-2xl space-y-8">
-          <div className="gap-2 gap-y-6 flex flex-col md:flex-row justify-between">
-            <div className="gap-2 flex flex-col order-2 md:order-1">
+          <div className="flex flex-col md:flex-row justify-between items-start gap-4 md:gap-8">
+            <div className="gap-2 flex flex-col flex-1">
+              <div className="flex justify-between items-center gap-4 md:block">
+                {/* Mobile Title with Line Break */}
+                <BlurFadeText
+                  delay={BLUR_FADE_DELAY}
+                  className="text-3xl font-semibold tracking-tighter sm:text-4xl lg:text-5xl flex-1 whitespace-pre-line md:hidden"
+                  yOffset={8}
+                  text={`Hi, I'm\n${DATA.name}`}
+                />
+                {/* Desktop Title without Line Break */}
+                <BlurFadeText
+                  delay={BLUR_FADE_DELAY}
+                  className="text-3xl font-semibold tracking-tighter sm:text-4xl lg:text-5xl flex-1 hidden md:block"
+                  yOffset={8}
+                  text={`Hi, I'm ${DATA.name}`}
+                />
+                {/* Mobile-only Avatar */}
+                <BlurFade delay={BLUR_FADE_DELAY} className="shrink-0 md:hidden">
+                  <Avatar className="size-20 border rounded-full shadow-lg ring-4 ring-muted">
+                    <AvatarImage style={{ position: 'relative', top: '38%', left: 0 }} alt={DATA.name} src={DATA.avatarUrl} />
+                    <AvatarFallback>{DATA.initials}</AvatarFallback>
+                  </Avatar>
+                </BlurFade>
+              </div>
+
               <BlurFadeText
-                delay={BLUR_FADE_DELAY}
-                className="text-3xl font-semibold tracking-tighter sm:text-4xl lg:text-5xl"
-                yOffset={8}
-                text={`Hi, I'm ${DATA.name}`}
-              />
-              <BlurFadeText
-                className="text-muted-foreground max-w-[600px] md:text-lg lg:text-xl"
+                className="text-muted-foreground max-w-[600px] md:text-lg lg:text-xl mt-2 md:mt-0"
                 delay={BLUR_FADE_DELAY}
                 text={DATA.description}
               />
@@ -44,9 +63,11 @@ export default function Page() {
                 </div>
               </BlurFade>
             </div>
-            <BlurFade delay={BLUR_FADE_DELAY} className="order-1 md:order-2">
-              <Avatar style={{ position: 'absolute' }} className="size-24 md:size-32 border rounded-full shadow-lg ring-4 ring-muted">
-                <AvatarImage style={{ position: 'relative', top: 50, left: 0 }} alt={DATA.name} src={DATA.avatarUrl} />
+
+            {/* Desktop-only Avatar */}
+            <BlurFade delay={BLUR_FADE_DELAY} className="shrink-0 hidden md:block">
+              <Avatar className="size-32 border rounded-full shadow-lg ring-4 ring-muted">
+                <AvatarImage style={{ position: 'relative', top: '38%', left: 0 }} alt={DATA.name} src={DATA.avatarUrl} />
                 <AvatarFallback>{DATA.initials}</AvatarFallback>
               </Avatar>
             </BlurFade>
@@ -169,6 +190,11 @@ export default function Page() {
       <section id="achievements">
         <BlurFade delay={BLUR_FADE_DELAY * 13}>
           <AchievementsSection />
+        </BlurFade>
+      </section>
+      <section id="youtube">
+        <BlurFade delay={BLUR_FADE_DELAY * 15}>
+          <YoutubeSection />
         </BlurFade>
       </section>
       <section id="contact">
