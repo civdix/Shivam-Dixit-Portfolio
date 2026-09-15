@@ -207,6 +207,29 @@ export const DATA = {
   ],
   projects: [
     {
+      title: "Aktu Result (Bond)",
+      href: "https://akturesult.bond",
+      dates: "Sep 2026",
+      active: true,
+      description:
+        "This website serves the AKTU result without dob service to user so Student can check there Result without entering there DOB, also there is a Roll number finder service with retrieving roll number of studnent from all across the student of AKTU with only the help of name and some basic details like college and year .",
+      technologies: ["JavaScript", "Astro.js", "CloudFlare", "Tailwind CSS", "Node.js", 'Telegram bot', 'Kotlin'],
+      links: [
+        {
+          type: "Website",
+          href: "https://akturesult.bond",
+          icon: <Icons.globe className="size-3" />,
+        },
+        {
+          type: "Source",
+          href: "https://github.com/civdix/aktu-result",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "/akturesultbond.png",
+      video: "",
+    },
+    {
       title: "Sukoon World",
       href: "https://sukoonworld.org",
       dates: "Jun 2026",
