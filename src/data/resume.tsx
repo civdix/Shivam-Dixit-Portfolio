@@ -206,8 +206,31 @@ export const DATA = {
     },
   ],
   projects: [
+     {
+      title: "Rent on Cent",
+      href: "https://rentoncent.bond",
+      dates: "Sep 2026",
+      active: true,
+      description:
+        "Rent on Cent Is a P2P 2 Wheeler renting website on first phase which is current phase we are running it around Vrindavan and Mathura for best customer service",
+      technologies: ["JavaScript", "Astro.js", "CloudFlare", "Tailwind CSS", "Node.js", 'Telegram bot', 'Kotlin'],
+      links: [
+        {
+          type: "Website",
+          href: "https://rentoncent.bond",
+          icon: <Icons.globe className="size-3" />,
+        },
+        {
+          type: "Source",
+          href: "https://github.com/civdix/rentmeyoubike",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "/rentocent.png",
+      video: "",
+    },
     {
-      title: "Aktu Result (Bond)",
+      title: "Aktu Result",
       href: "https://akturesult.bond",
       dates: "Sep 2026",
       active: true,
@@ -227,7 +250,7 @@ export const DATA = {
         },
       ],
       image: "/akturesultbond.png",
-      video: "",
+      video: "https://www.youtube.com/watch?v=RG9ewV1w9lA",
     },
     {
       title: "Sukoon World",
