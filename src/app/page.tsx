@@ -38,11 +38,23 @@ export default function Page() {
       "@context": "https://schema.org",
       "@type": "WebSite",
       name: DATA.name,
+      alternateName: "Shivam Dixit Portfolio",
       url: DATA.url,
       description: DATA.description,
       publisher: {
         "@type": "Person",
         name: DATA.name,
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: `${DATA.name} | AI Software Engineer Portfolio`,
+      url: DATA.url,
+      isPartOf: {
+        "@type": "WebSite",
+        name: DATA.name,
+        url: DATA.url,
       },
     },
   ]).replace(/</g, "\\u003c");
