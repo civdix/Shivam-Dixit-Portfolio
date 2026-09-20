@@ -15,8 +15,45 @@ import YoutubeSection from "@/components/section/youtube-section";
 const BLUR_FADE_DELAY = 0.04;
 
 export default function Page() {
+  const jsonLdContent = JSON.stringify([
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      name: DATA.name,
+      url: DATA.url,
+      image: new URL(DATA.avatarUrl, DATA.url).toString(),
+      jobTitle: "AI Software Engineer",
+      description: DATA.description,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Noida",
+        addressRegion: "Uttar Pradesh",
+        addressCountry: "IN",
+      },
+      sameAs: Object.values(DATA.contact.social)
+        .map((social) => social.url)
+        .filter((url) => url.startsWith("http")),
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: DATA.name,
+      url: DATA.url,
+      description: DATA.description,
+      publisher: {
+        "@type": "Person",
+        name: DATA.name,
+      },
+    },
+  ]).replace(/</g, "\\u003c");
+
   return (
     <main className="min-h-dvh flex flex-col gap-14 relative">
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: jsonLdContent }}
+      />
       <section id="hero">
         <div className="mx-auto w-full max-w-2xl space-y-8">
           <div className="flex flex-col md:flex-row justify-between items-start gap-4 md:gap-8">

@@ -47,12 +47,16 @@ export async function generateMetadata({
   return {
     title,
     description,
+    alternates: {
+      canonical: `/blog/${slug}`,
+    },
     openGraph: {
       title,
       description,
       type: "article",
       publishedTime,
       url: `${DATA.url}/blog/${slug}`,
+      siteName: DATA.name,
       ...(image && {
         images: [
           {
@@ -110,6 +114,12 @@ export default async function Blog({
     author: {
       "@type": "Person",
       name: DATA.name,
+        url: DATA.url,
+    },
+    publisher: {
+      "@type": "Person",
+      name: DATA.name,
+      url: DATA.url,
     },
   }).replace(/</g, "\\u003c");
 

@@ -8,14 +8,21 @@ import { ChevronRight } from "lucide-react";
 export const metadata: Metadata = {
   title: "Blog",
   description: "Technical articles on software engineering, distributed systems, caching, and database design.",
+  alternates: {
+    canonical: "/blog",
+  },
   openGraph: {
     title: "Blog",
     description: "Technical articles on software engineering, distributed systems, caching, and database design.",
+    url: "/blog",
+    type: "website",
+    images: ["/blog/opengraph-image"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Blog",
     description: "Technical articles on software engineering, distributed systems, caching, and database design.",
+    images: ["/blog/opengraph-image"],
   },
 };
 
