@@ -24,8 +24,8 @@ export default function ContactSection() {
   };
 
   return (
-    <div className="min-h-[430px] [perspective:1600px]">
-      <div className={`relative min-h-[430px] w-full transition-transform duration-700 [transform-style:preserve-3d] ${showPlaylist ? "[transform:rotateY(180deg)]" : ""}`}>
+    <div className="min-h-[390px] [perspective:1600px]">
+      <div className={`relative min-h-[390px] w-full transition-transform duration-700 [transform-style:preserve-3d] ${showPlaylist ? "[transform:rotateY(180deg)]" : ""}`}>
         <div className="absolute inset-0 overflow-hidden rounded-xl border bg-background p-10 [backface-visibility:hidden]">
           <button
             type="button"
@@ -40,7 +40,7 @@ export default function ContactSection() {
               </span>
             </span>
           </button>
-          <div className="absolute -top-4 left-1/2 z-10 -translate-x-1/2 rounded-xl border bg-primary px-4 py-1">
+          <div className="absolute left-1/2 top-3 z-10 -translate-x-1/2 rounded-xl border bg-primary px-4 py-1">
             <span className="text-background text-sm font-medium">Contact</span>
           </div>
           <div className="absolute inset-x-0 top-0 h-1/2 overflow-hidden rounded-xl">
@@ -122,7 +122,7 @@ export default function ContactSection() {
               </span>
             </span>
           </button>
-          <div className="absolute -top-4 left-1/2 z-10 -translate-x-1/2 rounded-xl border bg-primary px-4 py-1">
+          <div className="absolute left-1/2 top-3 z-10 -translate-x-1/2 rounded-xl border bg-primary px-4 py-1">
             <span className="text-background text-sm font-medium">Music</span>
           </div>
           <div className="flex h-full flex-col justify-center">
@@ -134,7 +134,7 @@ export default function ContactSection() {
               title="Spotify Embed: Recommendation Playlist"
               src={`https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator&theme=0`}
               width="100%"
-              height="300"
+              height="260"
               className="w-full"
               frameBorder="0"
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
