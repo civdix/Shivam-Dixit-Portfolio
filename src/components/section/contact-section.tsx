@@ -24,40 +24,37 @@ export default function ContactSection() {
   };
 
   return (
-    <div className="border rounded-xl p-10 relative">
-      <button
-        type="button"
-        aria-label={showPlaylist ? "Hide playlist" : "Show playlist"}
-        aria-pressed={showPlaylist}
-        onClick={() => setShowPlaylist((isVisible) => !isVisible)}
-        className="group absolute right-4 top-4 z-10 size-11 [perspective:600px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-full"
-      >
-        <span
-          className={`relative block size-full rounded-full border border-[#1ed760]/40 bg-[#1ed760]/10 text-[#1ed760] shadow-sm transition-transform duration-700 [transform-style:preserve-3d] group-hover:shadow-[#1ed760]/30 group-hover:shadow-lg ${showPlaylist ? "[transform:rotateY(180deg)]" : ""}`}
-        >
-          <span className="absolute inset-0 flex items-center justify-center [backface-visibility:hidden]">
-            <Music2 className="size-5" aria-hidden="true" />
-          </span>
-          <span className="absolute inset-0 flex items-center justify-center [backface-visibility:hidden] [transform:rotateY(180deg)]">
-            <ListMusic className="size-5" aria-hidden="true" />
-          </span>
-        </span>
-      </button>
-      <div className="absolute -top-4 border bg-primary z-10 rounded-xl px-4 py-1 left-1/2 -translate-x-1/2">
-        <span className="text-background text-sm font-medium">Contact</span>
-      </div>
-      <div className="absolute inset-0 top-0 left-0 right-0 h-1/2 rounded-xl overflow-hidden">
-        <FlickeringGrid
-          className="h-full w-full"
-          squareSize={2}
-          gridGap={2}
-          style={{
-            maskImage: "linear-gradient(to bottom, black, transparent)",
-            WebkitMaskImage: "linear-gradient(to bottom, black, transparent)",
-          }}
-        />
-      </div>
-      <div className="relative flex flex-col items-center gap-4 text-center">
+    <div className="min-h-[500px] [perspective:1600px]">
+      <div className={`relative min-h-[500px] w-full transition-transform duration-700 [transform-style:preserve-3d] ${showPlaylist ? "[transform:rotateY(180deg)]" : ""}`}>
+        <div className="absolute inset-0 overflow-hidden rounded-xl border bg-background p-10 [backface-visibility:hidden]">
+          <button
+            type="button"
+            aria-label="Show playlist"
+            aria-pressed={showPlaylist}
+            onClick={() => setShowPlaylist(true)}
+            className="group absolute right-4 top-4 z-10 size-11 rounded-full [perspective:600px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          >
+            <span className="relative block size-full rounded-full border border-[#1ed760]/40 bg-[#1ed760]/10 text-[#1ed760] shadow-sm transition-shadow duration-300 group-hover:shadow-lg group-hover:shadow-[#1ed760]/30">
+              <span className="absolute inset-0 flex items-center justify-center">
+                <Music2 className="size-5" aria-hidden="true" />
+              </span>
+            </span>
+          </button>
+          <div className="absolute -top-4 left-1/2 z-10 -translate-x-1/2 rounded-xl border bg-primary px-4 py-1">
+            <span className="text-background text-sm font-medium">Contact</span>
+          </div>
+          <div className="absolute inset-x-0 top-0 h-1/2 overflow-hidden rounded-xl">
+            <FlickeringGrid
+              className="h-full w-full"
+              squareSize={2}
+              gridGap={2}
+              style={{
+                maskImage: "linear-gradient(to bottom, black, transparent)",
+                WebkitMaskImage: "linear-gradient(to bottom, black, transparent)",
+              }}
+            />
+          </div>
+          <div className="relative flex h-full flex-col items-center justify-center gap-4 text-center">
         <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
           Get in Touch
         </h2>
@@ -109,26 +106,41 @@ export default function ContactSection() {
             <span>🔗</span> {copied ? "Copied!" : "Copy Resume Link"}
           </button>
         </div>
-      </div>
-      <div
-        className={`relative z-[1] grid transition-[grid-template-rows,opacity,margin] duration-700 ease-in-out ${showPlaylist ? "mt-8 grid-rows-[1fr] opacity-100" : "mt-0 grid-rows-[0fr] opacity-0"}`}
-        aria-hidden={!showPlaylist}
-      >
-        <div className="min-h-0 overflow-hidden border-t border-border/70 pt-6">
-          <div className="mb-4 flex items-center justify-center gap-2 text-sm font-medium text-muted-foreground">
-            <Music2 className="size-4 text-[#1ed760]" aria-hidden="true" />
-            <span>Currently listening</span>
           </div>
-          <iframe
-            title="Spotify Embed: Recommendation Playlist"
-            src={`https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator&theme=0`}
-            width="100%"
-            height="100%"
-            style={{ minHeight: "360px" }}
-            frameBorder="0"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"
-          />
+        </div>
+        <div className="absolute inset-0 overflow-hidden rounded-xl border bg-background p-6 [backface-visibility:hidden] [transform:rotateY(180deg)] sm:p-10">
+          <button
+            type="button"
+            aria-label="Hide playlist"
+            aria-pressed={showPlaylist}
+            onClick={() => setShowPlaylist(false)}
+            className="group absolute right-4 top-4 z-10 size-11 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          >
+            <span className="relative block size-full rounded-full border border-[#1ed760]/40 bg-[#1ed760]/10 text-[#1ed760] shadow-sm transition-shadow duration-300 group-hover:shadow-lg group-hover:shadow-[#1ed760]/30">
+              <span className="absolute inset-0 flex items-center justify-center">
+                <ListMusic className="size-5" aria-hidden="true" />
+              </span>
+            </span>
+          </button>
+          <div className="absolute -top-4 left-1/2 z-10 -translate-x-1/2 rounded-xl border bg-primary px-4 py-1">
+            <span className="text-background text-sm font-medium">Music</span>
+          </div>
+          <div className="flex h-full flex-col justify-center">
+            <div className="mb-4 flex items-center justify-center gap-2 text-sm font-medium text-muted-foreground">
+              <Music2 className="size-4 text-[#1ed760]" aria-hidden="true" />
+              <span>Currently listening</span>
+            </div>
+            <iframe
+              title="Spotify Embed: Recommendation Playlist"
+              src={`https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator&theme=0`}
+              width="100%"
+              height="360"
+              className="w-full"
+              frameBorder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+            />
+          </div>
         </div>
       </div>
     </div>
