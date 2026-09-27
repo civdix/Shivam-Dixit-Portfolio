@@ -9,7 +9,7 @@ import { DATA } from "@/data/resume";
 export default function ContactSection() {
   const [copied, setCopied] = useState(false);
   const [showPlaylist, setShowPlaylist] = useState(false);
-  const playlistId = "3NbHTIlZSqS8LOdIYUoBRA";
+  const playlistId = "0AC0n8ccSfjnkGTMMXiJYY";
 
   const handleCopy = () => {
     const resumeUrl = DATA.contact.resumeUrl || "/resume.pdf";
