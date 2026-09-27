@@ -24,8 +24,8 @@ export default function ContactSection() {
   };
 
   return (
-    <div className="min-h-[500px] [perspective:1600px]">
-      <div className={`relative min-h-[500px] w-full transition-transform duration-700 [transform-style:preserve-3d] ${showPlaylist ? "[transform:rotateY(180deg)]" : ""}`}>
+    <div className="min-h-[430px] [perspective:1600px]">
+      <div className={`relative min-h-[430px] w-full transition-transform duration-700 [transform-style:preserve-3d] ${showPlaylist ? "[transform:rotateY(180deg)]" : ""}`}>
         <div className="absolute inset-0 overflow-hidden rounded-xl border bg-background p-10 [backface-visibility:hidden]">
           <button
             type="button"
@@ -108,7 +108,7 @@ export default function ContactSection() {
         </div>
           </div>
         </div>
-        <div className="absolute inset-0 overflow-hidden rounded-xl border bg-background p-6 [backface-visibility:hidden] [transform:rotateY(180deg)] sm:p-10">
+        <div className="absolute inset-0 overflow-hidden rounded-xl border bg-background p-5 [backface-visibility:hidden] [transform:rotateY(180deg)] sm:p-7">
           <button
             type="button"
             aria-label="Hide playlist"
@@ -134,12 +134,20 @@ export default function ContactSection() {
               title="Spotify Embed: Recommendation Playlist"
               src={`https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator&theme=0`}
               width="100%"
-              height="360"
+              height="300"
               className="w-full"
               frameBorder="0"
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               loading="lazy"
             />
+            <Link
+              href={`https://open.spotify.com/playlist/${playlistId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 text-center text-xs text-[#1ed760] underline underline-offset-4 hover:text-[#1ed760]/80"
+            >
+              Open in Spotify
+            </Link>
           </div>
         </div>
       </div>
