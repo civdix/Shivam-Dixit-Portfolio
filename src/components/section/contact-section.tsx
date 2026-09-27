@@ -9,7 +9,7 @@ import { DATA } from "@/data/resume";
 export default function ContactSection() {
   const [copied, setCopied] = useState(false);
   const [showPlaylist, setShowPlaylist] = useState(false);
-  const playlistId = "0AC0n8ccSfjnkGTMMXiJYY";
+  const playlistId = "5bixj0PYvJVJCOhqZ4XEFv";
 
   const handleCopy = () => {
     const resumeUrl = DATA.contact.resumeUrl || "/resume.pdf";
@@ -130,16 +130,19 @@ export default function ContactSection() {
               <Music2 className="size-4 text-[#1ed760]" aria-hidden="true" />
               <span>Currently listening</span>
             </div>
-            <iframe
-              title="Spotify Embed: Recommendation Playlist"
-              src={`https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator&theme=0`}
-              width="100%"
-              height="260"
-              className="w-full"
-              frameBorder="0"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              loading="lazy"
-            />
+            <div className="overflow-hidden rounded-xl border border-border/60 bg-black shadow-sm">
+              <iframe
+                title="Spotify Embed: Recommendation Playlist"
+                src={`https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator&theme=0`}
+                width="100%"
+                height="260"
+                className="block w-full"
+                frameBorder="0"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+              />
+            </div>
             <Link
               href={`https://open.spotify.com/playlist/${playlistId}`}
               target="_blank"
