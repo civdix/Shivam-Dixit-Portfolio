@@ -129,7 +129,12 @@ function parsePublishedResume(html: string): ResumeData {
     education.end = end;
   }
 
-  const achievementBullets = bullets(achievementsText);
+  const achievementBulletStart = achievementsText.indexOf("•");
+  const achievementBullets = bullets(
+    achievementBulletStart >= 0
+      ? achievementsText.slice(achievementBulletStart)
+      : achievementsText,
+  );
   if (achievementBullets.length > 0) {
     (parsed as unknown as { achievements: unknown[] }).achievements = achievementBullets.map((description) => ({
       title: description,
