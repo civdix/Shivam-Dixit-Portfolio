@@ -108,7 +108,10 @@ function parsePublishedResume(html: string): ResumeData {
       .filter((index) => index > start)
       .sort((a, b) => a - b)[0];
     const workText = experienceText.slice(start, nextStart ?? experienceText.length);
-    const workBullets = bullets(workText);
+    const bulletStart = workText.indexOf("•");
+    const workBullets = bullets(
+      bulletStart >= 0 ? workText.slice(bulletStart) : workText,
+    );
     if (workBullets.length > 0) mutableWork.description = workBullets;
     const date = workText.match(/\d{2}\/\d{4}\s*-\s*(Present|\d{2}\/\d{4})/i);
     if (date) {

@@ -10,6 +10,7 @@ export const metadata = {
 export default function ResumePage() {
   const resumeUrl = DATA.contact.resumeUrl;
   const resumeDownloadUrl = DATA.contact.resumeLocation;
+  const embeddedResumeUrl = `${resumeUrl}${resumeUrl.includes("?") ? "&" : "?"}embedded=true`;
 
   return (
     <main className="flex min-h-dvh flex-col gap-6">
@@ -41,7 +42,7 @@ export default function ResumePage() {
       <div className="min-h-[70vh] overflow-hidden rounded-xl border bg-muted/20 shadow-sm">
         <iframe
           title={`${DATA.name} resume`}
-          src={resumeUrl}
+          src={embeddedResumeUrl}
           className="h-[75vh] min-h-[600px] w-full bg-white"
           loading="eager"
         />
