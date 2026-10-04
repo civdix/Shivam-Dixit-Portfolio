@@ -1,5 +1,5 @@
 import { Icons } from "@/components/icons";
-import { HomeIcon, NotebookIcon } from "lucide-react";
+import { FileText, HomeIcon, NotebookIcon } from "lucide-react";
 
 export const DATA = {
   name: "Shivam Dixit",
@@ -80,12 +80,15 @@ export const DATA = {
   navbar: [
     { href: "/", icon: HomeIcon, label: "Home" },
     { href: "/blog", icon: NotebookIcon, label: "Blog" },
+    { href: "/resume", icon: FileText, label: "Resume" },
   ],
   contact: {
     email: "dixitshivam249@gmail.com",
     tel: "+919720965985",
-    resumeLocation: "/resume.pdf",
-    resumeUrl: "https://drive.google.com/file/d/1o8uC-yV_7_GfM3p2gH_3B81674wO8DkF/view?usp=sharing",
+    resumeLocation:
+      "https://docs.google.com/document/d/e/2PACX-1vSyIoyDM6z-uyF_ziqazySlPgZsldO6xohOILhT8TMuBepIm1ZhaJqIznDPinduGI1SigSV3YihSjLN/pub",
+    resumeUrl:
+      "https://docs.google.com/document/d/e/2PACX-1vSyIoyDM6z-uyF_ziqazySlPgZsldO6xohOILhT8TMuBepIm1ZhaJqIznDPinduGI1SigSV3YihSjLN/pub",
     social: {
       GitHub: {
         name: "GitHub",
@@ -101,7 +104,7 @@ export const DATA = {
       },
       LeetCode: {
         name: "LeetCode",
-        url: "https://leetcode.com/u/oohwooh/",
+        url: "https://leetcode.com/u/goingtofar/",
         icon: Icons.leetcode,
         navbar: true,
       },
@@ -129,6 +132,7 @@ export const DATA = {
         icon: Icons.youtube,
         navbar: true,
       }
+
     },
   },
   work: [
@@ -443,7 +447,7 @@ export const DATA = {
         {
           title: "LeetCode",
           icon: <Icons.globe className="h-4 w-4" />,
-          href: "https://leetcode.com/u/oohwooh/",
+          href: "https://leetcode.com/u/goingtofar/",
         },
         {
           title: "GeeksforGeeks",
@@ -490,3 +494,5 @@ export const DATA = {
     },
   ],
 } as const;
+
+export type ResumeData = typeof DATA;

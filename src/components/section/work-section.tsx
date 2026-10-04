@@ -8,6 +8,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { DATA } from "@/data/resume";
+import type { ResumeData } from "@/data/resume";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -32,8 +33,8 @@ function LogoImage({ src, alt }: { src: string; alt: string }) {
   );
 }
 
-export default function WorkSection() {
-  const [openItems, setOpenItems] = useState<string[]>([DATA.work[0]?.company || ""]);
+export default function WorkSection({ work = DATA.work }: { work?: ResumeData["work"] }) {
+  const [openItems, setOpenItems] = useState<string[]>([work[0]?.company || ""]);
   const itemRefs = useRef<Map<string, HTMLDivElement>>(new Map());
   const isManualClick = useRef(false);
   const clickTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -93,7 +94,7 @@ export default function WorkSection() {
       const viewportHeight = window.innerHeight;
 
       // Get current rects of all items
-      const items = DATA.work.map((w) => {
+      const items = work.map((w) => {
         const node = itemRefs.current.get(w.company);
         return {
           company: w.company,
@@ -147,12 +148,12 @@ export default function WorkSection() {
       if (stateChanged) {
         // Ensure at least one item remains open
         if (nextOpenItems.length === 0) {
-          nextOpenItems = [DATA.work[0].company];
+          nextOpenItems = [work[0].company];
         }
 
         // Record current positions before applying the state update
         const currentPositions = new Map<string, { height: number; bottom: number }>();
-        DATA.work.forEach((w) => {
+        work.forEach((w) => {
           const node = itemRefs.current.get(w.company);
           if (node) {
             currentPositions.set(w.company, {
@@ -181,7 +182,7 @@ export default function WorkSection() {
       onValueChange={handleValueChange}
       className="w-full grid gap-6"
     >
-      {DATA.work.map((work) => (
+      {work.map((work) => (
         <div
           key={work.company}
           ref={(el) => {

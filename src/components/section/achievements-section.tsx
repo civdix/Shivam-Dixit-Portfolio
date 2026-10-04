@@ -2,9 +2,10 @@
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { DATA } from "@/data/resume";
+import type { ResumeData } from "@/data/resume";
 import { Timeline, TimelineItem, TimelineConnectItem } from "@/components/timeline";
 
-export default function AchievementsSection() {
+export default function AchievementsSection({ data = DATA }: { data?: ResumeData }) {
   return (
     <section id="achievements" className="overflow-hidden">
       <div className="flex min-h-0 flex-col gap-y-8 w-full">
@@ -24,7 +25,7 @@ export default function AchievementsSection() {
           </div>
         </div>
         <Timeline>
-          {DATA.achievements.map((achievement) => (
+          {data.achievements.map((achievement) => (
             <TimelineItem key={achievement.title + achievement.dates} className="w-full flex items-start justify-between gap-10">
               <TimelineConnectItem className="flex items-start justify-center">
                 <div className="size-10 bg-card z-10 shrink-0 overflow-hidden p-1.5 border rounded-full shadow ring-2 ring-border flex items-center justify-center flex-none">

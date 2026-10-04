@@ -1,7 +1,7 @@
 import BlurFade from "@/components/magicui/blur-fade";
 import BlurFadeText from "@/components/magicui/blur-fade-text";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { DATA } from "@/data/resume";
+import { getResumeData } from "@/data/resume-fetcher";
 import Link from "next/link";
 import Markdown from "react-markdown";
 import ContactSection from "@/components/section/contact-section";
@@ -14,47 +14,48 @@ import YoutubeSection from "@/components/section/youtube-section";
 
 const BLUR_FADE_DELAY = 0.04;
 
-export default function Page() {
+export default async function Page() {
+  const data = await getResumeData();
   const jsonLdContent = JSON.stringify([
     {
       "@context": "https://schema.org",
       "@type": "Person",
-      name: DATA.name,
-      url: DATA.url,
-      image: new URL(DATA.avatarUrl, DATA.url).toString(),
+      name: data.name,
+      url: data.url,
+      image: new URL(data.avatarUrl, data.url).toString(),
       jobTitle: "AI Software Engineer",
-      description: DATA.description,
+      description: data.description,
       address: {
         "@type": "PostalAddress",
         addressLocality: "Noida",
         addressRegion: "Uttar Pradesh",
         addressCountry: "IN",
       },
-      sameAs: Object.values(DATA.contact.social)
+      sameAs: Object.values(data.contact.social)
         .map((social) => social.url)
         .filter((url) => url.startsWith("http")),
     },
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      name: DATA.name,
+      name: data.name,
       alternateName: "Shivam Dixit Portfolio",
-      url: DATA.url,
-      description: DATA.description,
+      url: data.url,
+      description: data.description,
       publisher: {
         "@type": "Person",
-        name: DATA.name,
+        name: data.name,
       },
     },
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      name: `${DATA.name} | AI Software Engineer Portfolio`,
-      url: DATA.url,
+      name: `${data.name} | AI Software Engineer Portfolio`,
+      url: data.url,
       isPartOf: {
         "@type": "WebSite",
-        name: DATA.name,
-        url: DATA.url,
+        name: data.name,
+        url: data.url,
       },
     },
   ]).replace(/</g, "\\u003c");
@@ -76,20 +77,20 @@ export default function Page() {
                   delay={BLUR_FADE_DELAY}
                   className="text-3xl font-semibold tracking-tighter sm:text-4xl lg:text-5xl flex-1 whitespace-pre-line md:hidden"
                   yOffset={8}
-                  text={`Hi, I'm\n${DATA.name}`}
+                  text={`Hi, I'm\n${data.name}`}
                 />
                 {/* Desktop Title without Line Break */}
                 <BlurFadeText
                   delay={BLUR_FADE_DELAY}
                   className="text-3xl font-semibold tracking-tighter sm:text-4xl lg:text-5xl flex-1 hidden md:block"
                   yOffset={8}
-                  text={`Hi, I'm ${DATA.name}`}
+                  text={`Hi, I'm ${data.name}`}
                 />
                 {/* Mobile-only Avatar */}
                 <BlurFade delay={BLUR_FADE_DELAY} className="shrink-0 md:hidden">
                   <Avatar className="size-20 border rounded-full shadow-lg ring-4 ring-muted">
-                    <AvatarImage style={{ position: 'relative', top: '38%', left: 0 }} alt={DATA.name} src={DATA.avatarUrl} />
-                    <AvatarFallback>{DATA.initials}</AvatarFallback>
+                    <AvatarImage style={{ position: 'relative', top: '38%', left: 0 }} alt={data.name} src={data.avatarUrl} />
+                    <AvatarFallback>{data.initials}</AvatarFallback>
                   </Avatar>
                 </BlurFade>
               </div>
@@ -97,7 +98,7 @@ export default function Page() {
               <BlurFadeText
                 className="text-muted-foreground max-w-[600px] md:text-lg lg:text-xl mt-2 md:mt-0"
                 delay={BLUR_FADE_DELAY}
-                text={DATA.description}
+                text={data.description}
               />
               <BlurFade delay={BLUR_FADE_DELAY * 1.5}>
                 <div className="flex flex-col gap-1.5 text-xs sm:text-sm text-muted-foreground mt-2 border-l-2 border-border pl-4">
@@ -116,8 +117,8 @@ export default function Page() {
             {/* Desktop-only Avatar */}
             <BlurFade delay={BLUR_FADE_DELAY} className="shrink-0 hidden md:block">
               <Avatar className="size-32 border rounded-full shadow-lg ring-4 ring-muted">
-                <AvatarImage style={{ position: 'relative', top: '38%', left: 0 }} alt={DATA.name} src={DATA.avatarUrl} />
-                <AvatarFallback>{DATA.initials}</AvatarFallback>
+                <AvatarImage style={{ position: 'relative', top: '38%', left: 0 }} alt={data.name} src={data.avatarUrl} />
+                <AvatarFallback>{data.initials}</AvatarFallback>
               </Avatar>
             </BlurFade>
           </div>
@@ -131,7 +132,7 @@ export default function Page() {
           <BlurFade delay={BLUR_FADE_DELAY * 4}>
             <div className="prose max-w-full text-pretty font-sans leading-relaxed text-muted-foreground dark:prose-invert">
               <Markdown>
-                {DATA.summary}
+                {data.summary}
               </Markdown>
             </div>
           </BlurFade>
@@ -143,7 +144,7 @@ export default function Page() {
             <h2 className="text-xl font-bold">Work Experience</h2>
           </BlurFade>
           <BlurFade delay={BLUR_FADE_DELAY * 6}>
-            <WorkSection />
+            <WorkSection work={data.work} />
           </BlurFade>
         </div>
       </section>
@@ -153,7 +154,7 @@ export default function Page() {
             <h2 className="text-xl font-bold">Education</h2>
           </BlurFade>
           <div className="flex flex-col gap-8">
-            {DATA.education.map((education, index) => (
+            {data.education.map((education, index) => (
               <BlurFade
                 key={education.school}
                 delay={BLUR_FADE_DELAY * 8 + index * 0.05}
@@ -201,7 +202,7 @@ export default function Page() {
             <h2 className="text-xl font-bold">Skills</h2>
           </BlurFade>
           <div className="grid gap-6">
-            {Object.entries(DATA.skills).map(([category, skills], categoryIndex) => (
+            {Object.entries(data.skills).map(([category, skills], categoryIndex) => (
               <BlurFade
                 key={category}
                 delay={BLUR_FADE_DELAY * (10 + categoryIndex)}
@@ -233,12 +234,12 @@ export default function Page() {
       </section>
       <section id="projects">
         <BlurFade delay={BLUR_FADE_DELAY * 11}>
-          <ProjectsSection />
+          <ProjectsSection data={data} />
         </BlurFade>
       </section>
       <section id="achievements">
         <BlurFade delay={BLUR_FADE_DELAY * 13}>
-          <AchievementsSection />
+          <AchievementsSection data={data} />
         </BlurFade>
       </section>
       <section id="youtube">
@@ -248,7 +249,15 @@ export default function Page() {
       </section>
       <section id="contact">
         <BlurFade delay={BLUR_FADE_DELAY * 16}>
-          <ContactSection />
+          <ContactSection
+            data={{
+              email: data.contact.email,
+              tel: data.contact.tel,
+              resumeUrl: data.contact.resumeUrl,
+              resumeLocation: data.contact.resumeLocation,
+              linkedInUrl: data.contact.social.LinkedIn.url,
+            }}
+          />
         </BlurFade>
       </section>
     </main>

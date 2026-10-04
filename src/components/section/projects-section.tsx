@@ -1,6 +1,7 @@
 import BlurFade from "@/components/magicui/blur-fade";
 import { ProjectCard } from "@/components/project-card";
 import { DATA } from "@/data/resume";
+import type { ResumeData } from "@/data/resume";
 import { Icons } from "@/components/icons";
 import projectPreviews from "@/data/project-previews.json";
 
@@ -40,7 +41,7 @@ function parseProjectDate(dateStr: string): number {
     return isNaN(parsed) ? 0 : parsed;
 }
 
-export default async function ProjectsSection() {
+export default async function ProjectsSection({ data = DATA }: { data?: ResumeData }) {
     let githubProjects: MergedProject[] = [];
 
     try {
@@ -102,7 +103,7 @@ export default async function ProjectsSection() {
     // Merge DATA.projects with fetched githubProjects using url or title as identifier
     const mergedProjects: MergedProject[] = [];
 
-    DATA.projects.forEach((proj) => {
+    data.projects.forEach((proj) => {
         mergedProjects.push({
             title: proj.title,
             href: proj.href,
@@ -180,4 +181,3 @@ export default async function ProjectsSection() {
         </section>
     );
 }
-

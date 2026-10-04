@@ -6,13 +6,29 @@ import { ListMusic, Music2 } from "lucide-react";
 import { FlickeringGrid } from "@/components/magicui/flickering-grid";
 import { DATA } from "@/data/resume";
 
-export default function ContactSection() {
+type ContactData = {
+  email: string;
+  tel: string;
+  resumeUrl: string;
+  resumeLocation: string;
+  linkedInUrl: string;
+};
+
+export default function ContactSection({
+  data = {
+    email: DATA.contact.email,
+    tel: DATA.contact.tel,
+    resumeUrl: DATA.contact.resumeUrl,
+    resumeLocation: DATA.contact.resumeLocation,
+    linkedInUrl: DATA.contact.social.LinkedIn.url,
+  },
+}: { data?: ContactData }) {
   const [copied, setCopied] = useState(false);
   const [showPlaylist, setShowPlaylist] = useState(false);
   const playlistId = "5bixj0PYvJVJCOhqZ4XEFv";
 
   const handleCopy = () => {
-    const resumeUrl = DATA.contact.resumeUrl || "/resume.pdf";
+    const resumeUrl = data.resumeUrl || "/resume.pdf";
     const fullUrl = typeof window !== "undefined"
       ? `${window.location.origin}${resumeUrl}`
       : resumeUrl;
@@ -61,7 +77,7 @@ export default function ContactSection() {
         <p className="mx-auto max-w-lg text-muted-foreground text-balance">
           Want to chat? Just shoot me a message{" "}
           <Link
-            href={DATA.contact.social.LinkedIn.url}
+            href={data.linkedInUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-500 hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
@@ -73,30 +89,35 @@ export default function ContactSection() {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-2 text-sm font-medium text-muted-foreground">
           <a
-            href={`mailto:${DATA.contact.email}`}
+            href={`mailto:${data.email}`}
             className="flex items-center gap-2 hover:text-foreground transition-colors"
           >
-            <span>📧</span> {DATA.contact.email}
+            <span>📧</span> {data.email}
           </a>
           <span className="hidden sm:inline text-muted-foreground/30">|</span>
           <a
-            href={`tel:${DATA.contact.tel}`}
+            href={`tel:${data.tel}`}
             className="flex items-center gap-2 hover:text-foreground transition-colors"
           >
-            <span>📞</span> {DATA.contact.tel}
+            <span>📞</span> {data.tel}
           </a>
         </div>
 
         {/* Resume pills */}
         <div className="flex flex-col sm:flex-row items-center gap-3 mt-4 justify-center text-sm font-medium">
           <a
-            href={DATA.contact.resumeLocation || "/resume.pdf"}
-            download={"Shivam_Dixit_Resume.pdf"}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/resume"
             className="inline-flex items-center gap-2 border bg-primary hover:bg-primary/90 text-background px-4 py-1.5 rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
           >
-            <span>📄</span> Download Resume
+            <span>📄</span> View Resume
+          </a>
+          <a
+            href={data.resumeLocation}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 border bg-background border-border hover:bg-muted text-foreground px-4 py-1.5 rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+          >
+            <span>⬇️</span> Open / Download Resume
           </a>
           <span className="text-xs text-muted-foreground/60 font-semibold uppercase">or</span>
           <button
