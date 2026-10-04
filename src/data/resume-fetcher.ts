@@ -39,6 +39,23 @@ function bullets(text: string) {
     .filter(Boolean);
 }
 
+function normalized(value: string) {
+  return value.toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function findCompany(text: string, company: string, fromIndex = 0) {
+  const aliases: Record<string, string[]> = {
+    geeksforgeeks: ["geeksforgeeks", "geeks for geeks"],
+    ritualgurus: ["ritualgurus", "ritual gurus", "ritual guru"],
+  };
+  const candidates = aliases[normalized(company)] ?? [company];
+
+  return candidates
+    .map((candidate) => text.toLowerCase().indexOf(candidate.toLowerCase(), fromIndex))
+    .filter((index) => index >= 0)
+    .sort((a, b) => a - b)[0] ?? -1;
+}
+
 function parsePublishedResume(html: string): ResumeData {
   const text = htmlToText(html);
   const parsed = {
@@ -84,10 +101,10 @@ function parsePublishedResume(html: string): ResumeData {
       start: string;
       end: string;
     };
-    const start = experienceText.indexOf(mutableWork.company);
+    const start = findCompany(experienceText, mutableWork.company);
     if (start < 0) continue;
     const nextStart = parsed.work
-      .map((candidate) => experienceText.indexOf(candidate.company, start + mutableWork.company.length))
+      .map((candidate) => findCompany(experienceText, candidate.company, start + mutableWork.company.length))
       .filter((index) => index > start)
       .sort((a, b) => a - b)[0];
     const workText = experienceText.slice(start, nextStart ?? experienceText.length);
