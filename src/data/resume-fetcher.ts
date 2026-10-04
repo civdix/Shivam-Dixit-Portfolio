@@ -39,23 +39,6 @@ function bullets(text: string) {
     .filter(Boolean);
 }
 
-function normalized(value: string) {
-  return value.toLowerCase().replace(/[^a-z0-9]/g, "");
-}
-
-function findCompany(text: string, company: string, fromIndex = 0) {
-  const aliases: Record<string, string[]> = {
-    geeksforgeeks: ["geeksforgeeks", "geeks for geeks"],
-    ritualgurus: ["ritualgurus", "ritual gurus", "ritual guru"],
-  };
-  const candidates = aliases[normalized(company)] ?? [company];
-
-  return candidates
-    .map((candidate) => text.toLowerCase().indexOf(candidate.toLowerCase(), fromIndex))
-    .filter((index) => index >= 0)
-    .sort((a, b) => a - b)[0] ?? -1;
-}
-
 function parsePublishedResume(html: string): ResumeData {
   const text = htmlToText(html);
   const parsed = {
@@ -74,7 +57,6 @@ function parsePublishedResume(html: string): ResumeData {
     })),
   } as unknown as ResumeData;
   const skillsText = section(text, "Skills", ["Experience"]);
-  const experienceText = section(text, "Experience", ["Education"]);
   const educationText = section(text, "Education", ["Projects"]);
   const projectsText = section(text, "Projects", ["Certifications", "Achievements"]);
   const achievementsText = section(text, "Achievements", []);
@@ -93,33 +75,6 @@ function parsePublishedResume(html: string): ResumeData {
     if (values.length > 0) skills[category] = values;
   }
   (parsed as unknown as { skills: typeof skills }).skills = skills;
-
-  for (const work of parsed.work) {
-    const mutableWork = work as unknown as {
-      company: string;
-      description: string[];
-      start: string;
-      end: string;
-    };
-    const start = findCompany(experienceText, mutableWork.company);
-    if (start < 0) continue;
-    const nextStart = parsed.work
-      .map((candidate) => findCompany(experienceText, candidate.company, start + mutableWork.company.length))
-      .filter((index) => index > start)
-      .sort((a, b) => a - b)[0];
-    const workText = experienceText.slice(start, nextStart ?? experienceText.length);
-    const bulletStart = workText.indexOf("•");
-    const workBullets = bullets(
-      bulletStart >= 0 ? workText.slice(bulletStart) : workText,
-    );
-    if (workBullets.length > 0) mutableWork.description = workBullets;
-    const date = workText.match(/\d{2}\/\d{4}\s*-\s*(Present|\d{2}\/\d{4})/i);
-    if (date) {
-      const [startDate, endDate] = date[0].split("-").map((value) => value.trim());
-      mutableWork.start = startDate;
-      mutableWork.end = endDate;
-    }
-  }
 
   const educationDates = educationText.match(/\d{2}\/\d{4}\s*-\s*\d{2}\/\d{4}/);
   if (educationDates && parsed.education[0]) {
