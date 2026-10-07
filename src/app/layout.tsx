@@ -9,6 +9,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { FlickeringGrid } from "@/components/magicui/flickering-grid";
 import { Analytics } from '@vercel/analytics/next';
+import { headers } from "next/headers";
+import { isFounderHostname } from "@/lib/utils";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -95,6 +97,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const resumeData = await getResumeData();
+  const requestHeaders = await headers();
+  const isFounderDomain = isFounderHostname(requestHeaders.get("host"));
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -117,10 +121,13 @@ export default async function RootLayout({
                 }}
               />
             </div>
-            <div className="relative z-10 max-w-2xl mx-auto py-12 pb-24 sm:py-24 px-6">
+            <div className={cn(
+              "relative z-10 mx-auto px-6",
+              isFounderDomain ? "w-full py-8 sm:py-10" : "max-w-2xl py-12 pb-24 sm:py-24",
+            )}>
               {children}
             </div>
-            <Navbar data={resumeData} />
+            {!isFounderDomain && <Navbar data={resumeData} />}
           </TooltipProvider>
         </ThemeProvider>
         <Analytics />

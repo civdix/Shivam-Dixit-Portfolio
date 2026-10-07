@@ -30,7 +30,7 @@ export default function ContactSection({
   const handleCopy = () => {
     const resumeUrl = data.resumeUrl || "/resume.pdf";
     const fullUrl = typeof window !== "undefined"
-      ? `${window.location.origin}${resumeUrl}`
+      ? new URL(resumeUrl, window.location.origin).toString()
       : resumeUrl;
 
     navigator.clipboard.writeText(fullUrl).then(() => {

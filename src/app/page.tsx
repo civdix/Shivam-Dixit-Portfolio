@@ -11,11 +11,20 @@ import WorkSection from "@/components/section/work-section";
 import { ArrowUpRight } from "lucide-react";
 import TechIcon from "@/components/tech-icon";
 import YoutubeSection from "@/components/section/youtube-section";
+import FounderPage from "@/components/founder-page";
+import { headers } from "next/headers";
+import { isFounderHostname } from "@/lib/utils";
 
 const BLUR_FADE_DELAY = 0.04;
 
 export default async function Page() {
   const data = await getResumeData();
+  const requestHeaders = await headers();
+
+  if (isFounderHostname(requestHeaders.get("host"))) {
+    return <FounderPage data={data} />;
+  }
+
   const jsonLdContent = JSON.stringify([
     {
       "@context": "https://schema.org",

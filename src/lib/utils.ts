@@ -5,6 +5,12 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export const FOUNDER_HOSTNAME = "founder.rentoncent.bond";
+
+export function isFounderHostname(hostname: string | null | undefined) {
+  return hostname?.split(":")[0].toLowerCase() === FOUNDER_HOSTNAME;
+}
+
 export function formatDate(date: string | Date) {
   // Use UTC to ensure consistent formatting between server and client
   const dateObj = typeof date === "string" ? new Date(date) : date;
