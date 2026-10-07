@@ -1,11 +1,17 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { ArrowUpRight, CheckCircle2, Send } from "lucide-react";
+import { ArrowUpRight, CheckCircle2, Linkedin, Phone, Send } from "lucide-react";
 
 type FormStatus = "idle" | "sending" | "success" | "error";
 
-export default function FounderContactForm() {
+type FounderContactFormProps = {
+  email: string;
+  phone: string;
+  linkedinUrl: string;
+};
+
+export default function FounderContactForm({ email, phone, linkedinUrl }: FounderContactFormProps) {
   const [status, setStatus] = useState<FormStatus>("idle");
   const [message, setMessage] = useState("");
 
@@ -70,9 +76,17 @@ export default function FounderContactForm() {
           </button>
           {status === "success" && <CheckCircle2 className="size-5 text-green-600" aria-hidden="true" />}
           {message && <p role="status" className={`text-sm ${status === "error" ? "text-destructive" : "text-muted-foreground"}`}>{message}</p>}
-          <a href="mailto:dixitshivam249@gmail.com" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground sm:ml-auto">
-            Email directly <ArrowUpRight className="size-4" aria-hidden="true" />
-          </a>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground sm:ml-auto">
+            <a href={`mailto:${email}`} className="inline-flex items-center gap-1 hover:text-foreground">
+              {email} <ArrowUpRight className="size-4" aria-hidden="true" />
+            </a>
+            <a href={`tel:${phone}`} className="inline-flex items-center gap-1 hover:text-foreground">
+              <Phone className="size-4" aria-hidden="true" /> {phone}
+            </a>
+            <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 hover:text-foreground">
+              <Linkedin className="size-4" aria-hidden="true" /> LinkedIn
+            </a>
+          </div>
         </div>
       </form>
     </section>

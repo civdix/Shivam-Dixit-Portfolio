@@ -1,7 +1,7 @@
-import { ProjectCard } from "@/components/project-card";
 import { ArrowUpRight, BriefcaseBusiness, Mail, Sparkles } from "lucide-react";
 import type { ResumeData } from "@/data/resume";
 import FounderContactForm from "@/components/founder-contact-form";
+import FounderProjects from "@/components/founder-projects";
 import { getMissingEmailEnvironment } from "@/lib/email";
 
 export default function FounderPage({ data }: { data: ResumeData }) {
@@ -99,23 +99,15 @@ export default function FounderPage({ data }: { data: ResumeData }) {
             Discuss a project <ArrowUpRight className="size-4" aria-hidden="true" />
           </a>
         </div>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {data.projects.map((project) => (
-            <ProjectCard
-              key={project.title}
-              title={project.title}
-              href={project.href}
-              description={project.description}
-              dates={project.dates}
-              tags={project.technologies}
-              image={project.image}
-              video={project.video}
-              links={project.links}
-            />
-          ))}
-        </div>
+        <FounderProjects projects={data.projects} />
       </section>
-      {emailConfigured && <FounderContactForm />}
+      {emailConfigured && (
+        <FounderContactForm
+          email={data.contact.email}
+          phone={data.contact.tel}
+          linkedinUrl={data.contact.social.LinkedIn.url}
+        />
+      )}
     </main>
   );
 }
