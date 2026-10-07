@@ -1,6 +1,7 @@
 import { ProjectCard } from "@/components/project-card";
 import { ArrowUpRight, BriefcaseBusiness, Mail, Sparkles } from "lucide-react";
 import type { ResumeData } from "@/data/resume";
+import FounderContactForm from "@/components/founder-contact-form";
 
 export default function FounderPage({ data }: { data: ResumeData }) {
   return (
@@ -111,6 +112,7 @@ export default function FounderPage({ data }: { data: ResumeData }) {
           ))}
         </div>
       </section>
+      <FounderContactForm />
     </main>
   );
 }

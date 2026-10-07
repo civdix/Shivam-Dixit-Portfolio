@@ -16,3 +16,7 @@ Required headers:
 Optional header:
 
 - `X-Email-Reply-To: sender@example.com`
+
+The founder site also exposes a public contact form at `/api/contact` when the
+SMTP variables above are configured. Set `EMAIL_TO` to the inbox that should
+receive those inquiries; it defaults to the portfolio email address.
