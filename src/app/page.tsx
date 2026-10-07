@@ -13,7 +13,7 @@ import TechIcon from "@/components/tech-icon";
 import YoutubeSection from "@/components/section/youtube-section";
 import FounderPage from "@/components/founder-page";
 import { headers } from "next/headers";
-import { isFounderHostname } from "@/lib/utils";
+import { FOUNDER_SITE_URL, isFounderHostname } from "@/lib/utils";
 
 const BLUR_FADE_DELAY = 0.04;
 
@@ -22,7 +22,51 @@ export default async function Page() {
   const requestHeaders = await headers();
 
   if (isFounderHostname(requestHeaders.get("host"))) {
-    return <FounderPage data={data} />;
+    const founderJsonLd = JSON.stringify([
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        name: "Shivam Dixit Software Development Services",
+        url: FOUNDER_SITE_URL,
+        image: new URL(data.avatarUrl, FOUNDER_SITE_URL).toString(),
+        description:
+          "Software engineering, website development, web applications, automation, and AI solutions for businesses in Mathura and Vrindavan.",
+        founder: { "@type": "Person", name: data.name },
+        areaServed: [
+          { "@type": "City", name: "Mathura" },
+          { "@type": "City", name: "Vrindavan" },
+          { "@type": "AdministrativeArea", name: "Uttar Pradesh" },
+        ],
+        serviceType: [
+          "Website development",
+          "Web application development",
+          "Software development",
+          "AI automation",
+        ],
+        email: `mailto:${data.contact.email}`,
+        telephone: data.contact.tel,
+        sameAs: [data.contact.social.LinkedIn.url, data.contact.social.GitHub.url],
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: "Shivam Dixit Software Development Services",
+        url: FOUNDER_SITE_URL,
+        description:
+          "Software engineer and website developer serving Mathura and Vrindavan.",
+      },
+    ]).replace(/</g, "\\u003c");
+
+    return (
+      <>
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: founderJsonLd }}
+        />
+        <FounderPage data={data} />
+      </>
+    );
   }
 
   const jsonLdContent = JSON.stringify([

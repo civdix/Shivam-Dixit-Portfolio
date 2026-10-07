@@ -21,8 +21,9 @@ export default function FounderPage({ data }: { data: ResumeData }) {
               Building useful digital products from the ground up.
             </h1>
             <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-              A client-facing look at {data.name}&apos;s work across software,
-              AI systems, and products made for real people.
+              Software engineer and website development partner in Mathura and
+              Vrindavan, building websites, web applications, AI systems, and
+              digital products for ambitious businesses.
             </p>
             <div className="flex flex-wrap gap-3 pt-2">
               <a
@@ -93,7 +94,7 @@ export default function FounderPage({ data }: { data: ResumeData }) {
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
             <p className="text-sm font-medium uppercase tracking-[0.18em] text-amber-700 dark:text-amber-400">Selected work</p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">A portfolio built in public.</h2>
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Websites, software, and AI that move work forward.</h2>
           </div>
           <a href={`mailto:${data.contact.email}`} className="hidden items-center gap-1 text-sm font-medium hover:underline sm:inline-flex">
             Discuss a project <ArrowUpRight className="size-4" aria-hidden="true" />

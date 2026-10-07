@@ -6,6 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const FOUNDER_HOSTNAME = "founder.rentoncent.bond";
+export const FOUNDER_SITE_URL = `https://${FOUNDER_HOSTNAME}`;
 
 export function isFounderHostname(hostname: string | null | undefined) {
   return hostname?.split(":")[0].toLowerCase() === FOUNDER_HOSTNAME;
