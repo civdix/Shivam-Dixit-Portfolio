@@ -2,8 +2,11 @@ import { ProjectCard } from "@/components/project-card";
 import { ArrowUpRight, BriefcaseBusiness, Mail, Sparkles } from "lucide-react";
 import type { ResumeData } from "@/data/resume";
 import FounderContactForm from "@/components/founder-contact-form";
+import { getMissingEmailEnvironment } from "@/lib/email";
 
 export default function FounderPage({ data }: { data: ResumeData }) {
+  const emailConfigured = getMissingEmailEnvironment().length === 0;
+
   return (
     <main className="mx-auto flex min-h-dvh max-w-7xl flex-col gap-20 pb-20 sm:gap-28">
       <section className="relative overflow-hidden border-b border-border/70 pb-16 pt-10 sm:pb-24 sm:pt-20">
@@ -112,7 +115,7 @@ export default function FounderPage({ data }: { data: ResumeData }) {
           ))}
         </div>
       </section>
-      <FounderContactForm />
+      {emailConfigured && <FounderContactForm />}
     </main>
   );
 }
