@@ -2,16 +2,16 @@ import Link from "next/link";
 
 const recentUploads = [
   {
-    id: "l3MyJNX9Y3Y",
-    title: "Puri life khatam karne wali galti",
+    id: "0wSEVfwgoIU",
+    title: "I GOT A HACKERRANK INTERVIEW INVITE! | SDE Intern | My Resume + Apply Link",
   },
   {
-    id: "65N4CmQ4ObA",
-    title: "Recent upload",
+    id: "u_7IHedAWm0",
+    title: "My Resume Project Triggered a 2-Device Interview?",
   },
   {
-    id: "yWCe2sO2koc",
-    title: "Html + Css = Survey Layout",
+    id: "RG9ewV1w9lA",
+    title: "Aktu Result Without DOB Method 3 | AKTU Result",
   },
 ];
 
