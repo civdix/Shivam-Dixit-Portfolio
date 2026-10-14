@@ -11,6 +11,7 @@ import WorkSection from "@/components/section/work-section";
 import { ArrowUpRight } from "lucide-react";
 import TechIcon from "@/components/tech-icon";
 import YoutubeSection from "@/components/section/youtube-section";
+import RecentUploadsSection from "@/components/section/recent-uploads-section";
 import FounderPage from "@/components/founder-page";
 import { headers } from "next/headers";
 import { FOUNDER_SITE_URL, isFounderHostname } from "@/lib/utils";
@@ -298,6 +299,11 @@ export default async function Page() {
       <section id="youtube">
         <BlurFade delay={BLUR_FADE_DELAY * 15}>
           <YoutubeSection />
+        </BlurFade>
+      </section>
+      <section id="recent-uploads">
+        <BlurFade delay={BLUR_FADE_DELAY * 15.5}>
+          <RecentUploadsSection />
         </BlurFade>
       </section>
       <section id="contact">
