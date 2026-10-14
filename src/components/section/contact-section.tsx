@@ -40,9 +40,9 @@ export default function ContactSection({
   };
 
   return (
-    <div className="min-h-[390px] [perspective:1600px]">
-      <div className={`relative min-h-[390px] w-full transition-transform duration-700 [transform-style:preserve-3d] ${showPlaylist ? "[transform:rotateY(180deg)]" : ""}`}>
-        <div className="absolute inset-0 overflow-hidden rounded-xl border bg-background p-10 [backface-visibility:hidden]">
+    <div className="min-h-[540px] [perspective:1600px] sm:min-h-[390px]">
+      <div className={`relative min-h-[540px] w-full transition-transform duration-700 [transform-style:preserve-3d] sm:min-h-[390px] ${showPlaylist ? "[transform:rotateY(180deg)]" : ""}`}>
+        <div className="absolute inset-0 overflow-hidden rounded-xl border bg-background p-5 [backface-visibility:hidden] sm:p-10">
           <button
             type="button"
             aria-label="Show playlist"
