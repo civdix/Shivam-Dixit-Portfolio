@@ -5,7 +5,6 @@ const CANONICAL_HOSTNAME = "shivamdixit.cv";
 const REDIRECT_HOSTNAMES = new Set([
   "shivamdixit.vercel.app",
   "www.shivamdixit.vercel.app",
-  "www.shivamdixit.cv",
 ]);
 
 export function proxy(request: NextRequest) {
