@@ -4,7 +4,7 @@ import { FileText, HomeIcon, NotebookIcon } from "lucide-react";
 export const DATA = {
   name: "Shivam Dixit",
   initials: "SD",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://shivamdixit.vercel.app",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://shivamdixit.cv",
   location: "Noida, Uttar Pradesh",
   locationLink: "https://www.google.com/maps/place/Noida,+Uttar+Pradesh",
   description:
@@ -438,10 +438,10 @@ export const DATA = {
   ],
   achievements: [
     {
-      title: "Solved 250+ DSA Questions",
+      title: "Solved 470+ DSA Questions",
       dates: "2024 - Present",
       location: "LeetCode & GeeksforGeeks",
-      description: "Solved 250+ data structures and algorithms questions on competitive programming platforms.",
+      description: "Solved 470+ data structures and algorithms questions on competitive programming platforms.",
       image: "",
       links: [
         {
