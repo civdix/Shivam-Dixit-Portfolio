@@ -8,7 +8,7 @@ const REDIRECT_HOSTNAMES = new Set([
   "www.shivamdixit.cv",
 ]);
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const hostname = request.headers.get("host")?.split(":")[0].toLowerCase();
 
   if (!hostname || !REDIRECT_HOSTNAMES.has(hostname)) {
