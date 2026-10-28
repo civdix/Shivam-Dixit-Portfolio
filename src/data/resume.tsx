@@ -38,6 +38,7 @@ export const DATA = {
       { name: "Node.js" },
       { name: "Express.js" },
       { name: "Django REST Framework" },
+      {name: "LiveKit"},
       { name: "Celery" },
       { name: "REST APIs" },
       { name: "WebSockets" },

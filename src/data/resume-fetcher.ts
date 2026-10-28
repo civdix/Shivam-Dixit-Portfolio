@@ -39,6 +39,62 @@ function bullets(text: string) {
     .filter(Boolean);
 }
 
+function formatTechnologyName(name: string) {
+  const groupedTechnology = name.match(/^(.+?)\s*\(([^()]+)\)$/);
+  if (!groupedTechnology) return [name];
+
+  const [, provider, technologies] = groupedTechnology;
+  return technologies
+    .split(",")
+    .map((technology) => technology.trim())
+    .filter(Boolean)
+    .map((technology) => `${provider.trim()} - ${technology}`);
+}
+
+function splitTechnologyNames(value: string) {
+  const names: string[] = [];
+  let start = 0;
+  let parenthesesDepth = 0;
+
+  for (let index = 0; index < value.length; index += 1) {
+    if (value[index] === "(") parenthesesDepth += 1;
+    if (value[index] === ")") parenthesesDepth = Math.max(0, parenthesesDepth - 1);
+    if (value[index] === "," && parenthesesDepth === 0) {
+      names.push(value.slice(start, index).trim());
+      start = index + 1;
+    }
+  }
+
+  names.push(value.slice(start).trim());
+  return names.filter(Boolean);
+}
+
+function formatTechnologyNames(names: readonly string[]) {
+  return names.flatMap(formatTechnologyName);
+}
+
+function formatResumeTechnologies(data: ResumeData): ResumeData {
+  const formatted = {
+    ...data,
+    skills: Object.fromEntries(
+      Object.entries(data.skills).map(([category, skills]) => [
+        category,
+        formatTechnologyNames(skills.map((skill) => skill.name)).map((name) => ({ name })),
+      ]),
+    ),
+    work: data.work.map((work) => ({
+      ...work,
+      badges: work.badges ? formatTechnologyNames(work.badges) : work.badges,
+    })),
+    projects: data.projects.map((project) => ({
+      ...project,
+      technologies: formatTechnologyNames(project.technologies),
+    })),
+  };
+
+  return formatted as unknown as ResumeData;
+}
+
 function parsePublishedResume(html: string): ResumeData {
   const text = htmlToText(html);
   const parsed = {
@@ -66,11 +122,8 @@ function parsePublishedResume(html: string): ResumeData {
     const separator = item.indexOf(":");
     if (separator < 0) continue;
     const category = item.slice(0, separator).trim();
-    const values = item
-      .slice(separator + 1)
-      .split(",")
-      .map((value) => value.trim())
-      .filter(Boolean)
+    const values = splitTechnologyNames(item.slice(separator + 1))
+      .flatMap(formatTechnologyName)
       .map((name) => ({ name }));
     if (values.length > 0) skills[category] = values;
   }
@@ -105,16 +158,15 @@ function parsePublishedResume(html: string): ResumeData {
     const projectStart = projectsText.indexOf(project.title);
     if (projectStart < 0) continue;
     const projectText = projectsText.slice(projectStart, projectsText.indexOf("•", projectStart + 2));
-    const technologies = projectText.match(/\|([^-\n]+)/)?.[1]
-      ?.split(",")
-      .map((value) => value.trim())
-      .filter(Boolean);
+    const technologyMatch = projectText.match(/\|([^-\n]+)/)?.[1];
+    const technologies = technologyMatch ? splitTechnologyNames(technologyMatch) : undefined;
     if (technologies?.length) {
-      (project as unknown as { technologies: string[] }).technologies = technologies;
+      (project as unknown as { technologies: string[] }).technologies =
+        formatTechnologyNames(technologies);
     }
   }
 
-  return parsed;
+  return formatResumeTechnologies(parsed);
 }
 
 export async function getResumeData(): Promise<ResumeData> {
@@ -126,6 +178,6 @@ export async function getResumeData(): Promise<ResumeData> {
     return parsePublishedResume(await response.text());
   } catch (error) {
     console.error("Unable to fetch the published resume; using local portfolio data.", error);
-    return DATA;
+    return formatResumeTechnologies(DATA);
   }
 }
