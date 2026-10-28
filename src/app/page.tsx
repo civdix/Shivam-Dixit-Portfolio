@@ -1,6 +1,7 @@
 import BlurFade from "@/components/magicui/blur-fade";
 import BlurFadeText from "@/components/magicui/blur-fade-text";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import type { ResumeData } from "@/data/resume";
 import { getResumeData } from "@/data/resume-fetcher";
 import Link from "next/link";
 import Markdown from "react-markdown";
@@ -18,8 +19,7 @@ import { FOUNDER_SITE_URL, isFounderHostname } from "@/lib/utils";
 
 const BLUR_FADE_DELAY = 0.04;
 
-export default async function Page() {
-  const data = await getResumeData();
+export async function PortfolioPage({ data }: { data: ResumeData }) {
   const requestHeaders = await headers();
 
   if (isFounderHostname(requestHeaders.get("host"))) {
@@ -321,4 +321,8 @@ export default async function Page() {
       </section>
     </main>
   );
+}
+
+export default async function Page() {
+  return <PortfolioPage data={await getResumeData({ syncWork: true })} />;
 }
