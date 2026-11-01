@@ -6,7 +6,7 @@ export async function GET() {
   const url = "https://www.youtube.com/@shivdix";
   
   // Default fallback values
-  let subscriberCount = "2.32K";
+  let subscriberCount = "2.33K";
   let viewsCount = "413,741";
   let videoCount = "97";
 
