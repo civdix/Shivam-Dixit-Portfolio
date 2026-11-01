@@ -11,6 +11,7 @@ function htmlToText(html: string) {
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
     .replace(/<style[\s\S]*?<\/style>/gi, " ")
     .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<li\b[^>]*>/gi, "\n• ")
     .replace(/<\/p>|<\/div>|<\/tr>|<\/li>/gi, "\n")
     .replace(/<[^>]+>/g, " ")
     .replace(/&nbsp;/gi, " ")
@@ -175,7 +176,7 @@ function syncWorkExperience(text: string, work: ResumeData["work"]) {
   const experienceText = section(text, "Experience", ["Education"]);
   const companyPatterns = work.map((role) => {
     if (role.company === "GeeksforGeeks") return /Geeks\s*for\s*Geeks/i;
-    if (role.company === "Ritual Gurus") return /Ritual\s*Gurus?/i;
+    if (role.company === "Ritual Guru") return /Ritual\s*Gurus?/i;
     return new RegExp(role.company.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
   });
   const companyPositions = companyPatterns.map((pattern) => experienceText.search(pattern));
@@ -184,13 +185,22 @@ function syncWorkExperience(text: string, work: ResumeData["work"]) {
     const start = companyPositions[index];
     if (start < 0) return role;
 
-    const end = companyPositions
+    const companyEnd = companyPositions
       .filter((position) => position > start)
       .sort((a, b) => a - b)[0] ?? experienceText.length;
-    const roleText = experienceText.slice(start, end);
-    const dates = roleText.match(/\d{2}\/\d{4}\s*-\s*\d{2}\/\d{4}/);
+    const initialRoleText = experienceText.slice(start, companyEnd);
+    const dates = initialRoleText.match(/\d{2}\/\d{4}\s*-\s*\d{2}\/\d{4}/);
     if (!dates) return role;
 
+    const datesEnd = start + (dates.index ?? 0) + dates[0].length;
+    const nextRoleTitle = work
+      .flatMap((nextRole) => {
+        const titleStart = experienceText.indexOf(nextRole.title, datesEnd);
+        return titleStart >= 0 ? [titleStart] : [];
+      })
+      .sort((a, b) => a - b)[0];
+    const end = Math.min(companyEnd, nextRoleTitle ?? experienceText.length);
+    const roleText = experienceText.slice(start, end);
     const [startDate, endDate] = dates[0].split("-").map((date) => formatResumeDate(date.trim()));
     const description = bullets(roleText.slice((dates.index ?? 0) + dates[0].length));
     return {
