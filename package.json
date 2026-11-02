@@ -24,6 +24,7 @@
     "@vercel/analytics": "^2.0.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "coding-activity-map": "github:civdix/activity-heatmap",
     "content-collections": "^0.2.1",
     "lucide-react": "^0.562.0",
     "motion": "^12.23.27",

@@ -13,6 +13,7 @@ import { ArrowUpRight } from "lucide-react";
 import TechIcon from "@/components/tech-icon";
 import YoutubeSection from "@/components/section/youtube-section";
 import RecentUploadsSection from "@/components/section/recent-uploads-section";
+import ActivityMapSection from "@/components/activity-map-section";
 import FounderPage from "@/components/founder-page";
 import { headers } from "next/headers";
 import { FOUNDER_SITE_URL, isFounderHostname } from "@/lib/utils";
@@ -294,6 +295,11 @@ export async function PortfolioPage({ data }: { data: ResumeData }) {
       <section id="achievements">
         <BlurFade delay={BLUR_FADE_DELAY * 13}>
           <AchievementsSection data={data} />
+        </BlurFade>
+      </section>
+      <section id="activity">
+        <BlurFade delay={BLUR_FADE_DELAY * 14}>
+          <ActivityMapSection />
         </BlurFade>
       </section>
       <section id="youtube">
