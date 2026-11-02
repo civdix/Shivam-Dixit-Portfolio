@@ -234,3 +234,7 @@
   }
 
 }
+
+html:not(.dark) [aria-label="Activity platforms"] button[aria-pressed="true"] {
+  color: var(--foreground) !important;
+}

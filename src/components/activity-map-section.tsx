@@ -28,7 +28,7 @@ export default function ActivityMapSection() {
         geeksforgeeks: "shivamdixit11",
       }}
       adapters={adapters}
-      initialPlatforms={["github", "leetcode"]}
+      initialPlatforms={["github", "leetcode","geeksforgeeks"]}
       year={2026}
       title="Coding activity"
       colors={{
