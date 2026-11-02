@@ -132,7 +132,7 @@ export const DATA = {
     {
       company: "GeeksforGeeks",
       href: "https://www.geeksforgeeks.org",
-      badges: ["Django REST Framework", "PostgreSQL", "Redis", "Elasticsearch", "Docker", "WebSockets", "WebRTC", "Amazon IVS", "CDN", "Redis", "Celery"],
+      badges: ["Django REST Framework", "PostgreSQL", "Redis", "Elasticsearch", "Docker", "WebSockets", "WebRTC", "Amazon IVS", "CDN", "Celery"],
       location: "Noida, India",
       title: "Software Development Engineer Intern",
       logoUrl: "/gfg_logo.png",

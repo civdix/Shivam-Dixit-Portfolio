@@ -11,6 +11,7 @@ import { FlickeringGrid } from "@/components/magicui/flickering-grid";
 import { Analytics } from '@vercel/analytics/next';
 import { headers } from "next/headers";
 import { FOUNDER_SITE_URL, isFounderHostname } from "@/lib/utils";
+import { Suspense } from "react";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -147,12 +148,16 @@ export async function generateMetadata(): Promise<Metadata> {
     : portfolioMetadata;
 }
 
+async function ResumeNavbar() {
+  const resumeData = await getResumeData();
+  return <Navbar data={resumeData} />;
+}
+
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const resumeData = await getResumeData();
   const requestHeaders = await headers();
   const isFounderDomain = isFounderHostname(requestHeaders.get("host"));
   return (
@@ -183,7 +188,11 @@ export default async function RootLayout({
             )}>
               {children}
             </div>
-            {!isFounderDomain && <Navbar data={resumeData} />}
+            {!isFounderDomain && (
+              <Suspense fallback={null}>
+                <ResumeNavbar />
+              </Suspense>
+            )}
           </TooltipProvider>
         </ThemeProvider>
         <Analytics />

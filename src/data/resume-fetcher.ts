@@ -3,6 +3,7 @@ import { Icons } from "@/components/icons";
 import { createElement } from "react";
 
 const PUBLISHED_RESUME_URL = DATA.contact.resumeUrl;
+const REMOTE_FETCH_TIMEOUT_MS = 5000;
 const GOOGLE_DRIVE_FILE_ID = "1ouE1cRscddbeKayz-Gf69OvfyBuE1lKVV2EEgm88PVc";
 const GOOGLE_DRIVE_API_KEY = process.env.GOOGLE_DRIVE_API_KEY;
 
@@ -315,6 +316,7 @@ function parsePublishedResume(html: string, syncWork: boolean): ResumeData {
 export async function getResumeData(options?: { syncWork?: boolean }): Promise<ResumeData> {
   try {
     const response = await fetch(PUBLISHED_RESUME_URL, {
+      signal: AbortSignal.timeout(REMOTE_FETCH_TIMEOUT_MS),
       next: { revalidate: 300 },
     });
     if (!response.ok) throw new Error(`Google Docs returned ${response.status}.`);
