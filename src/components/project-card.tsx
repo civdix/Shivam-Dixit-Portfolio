@@ -9,18 +9,27 @@ import { useState } from "react";
 import Markdown from "react-markdown";
 import { TechIcon } from "@/components/tech-icon";
 
-function ProjectImage({ src, alt }: { src: string; alt: string }) {
+function ProjectImage({ src, fallbackSrc, alt }: { src: string; fallbackSrc?: string; alt: string }) {
   const [imageError, setImageError] = useState(false);
-  if (!src || imageError) {
+  const [useFallback, setUseFallback] = useState(false);
+  const imageSrc = useFallback ? fallbackSrc : src;
+
+  if (!imageSrc || imageError) {
     return <div className="w-full h-48 bg-muted" />;
   }
 
   return (
     <img
-      src={src}
+      src={imageSrc}
       alt={alt}
       className="w-full h-48 object-cover"
-      onError={() => setImageError(true)}
+      onError={() => {
+        if (fallbackSrc && !useFallback) {
+          setUseFallback(true);
+        } else {
+          setImageError(true);
+        }
+      }}
     />
   );
 }
@@ -33,6 +42,7 @@ interface Props {
   tags: readonly string[];
   link?: string;
   image?: string;
+  imageLink?: string;
   video?: string;
   links?: readonly {
     icon: React.ReactNode;
@@ -50,6 +60,7 @@ export function ProjectCard({
   tags,
   link,
   image,
+  imageLink,
   video,
   links,
   className,
@@ -69,7 +80,7 @@ export function ProjectCard({
           className="block"
         >
           {image ? (
-            <ProjectImage src={image} alt={title} />
+            <ProjectImage src={image} fallbackSrc={imageLink} alt={title} />
           ) : href && href.startsWith("http") && !href.includes("github.com") ? (
             <div className="w-full h-48 overflow-hidden relative bg-muted/20">
               <iframe

@@ -1,5 +1,6 @@
 import BlurFade from "@/components/magicui/blur-fade";
 import { ProjectCard } from "@/components/project-card";
+import { ProjectGrid } from "@/components/project-grid";
 import { DATA } from "@/data/resume";
 import type { ResumeData } from "@/data/resume";
 import { Icons } from "@/components/icons";
@@ -26,6 +27,7 @@ interface MergedProject {
     description: string;
     technologies: readonly string[];
     image: string;
+    imageLink?: string;
     video: string;
     links: readonly {
         icon: React.ReactNode;
@@ -33,6 +35,58 @@ interface MergedProject {
         href: string;
     }[];
     timestamp: number;
+}
+
+function getImageUrlFromTopics(topics: readonly string[] = []): string | undefined {
+    const imageTopic = topics.find((topic) =>
+        topic.startsWith("image-url-") || topic.startsWith("image=") || topic.startsWith("image:")
+    );
+
+    if (!imageTopic) return undefined;
+
+    const prefixLength = imageTopic.startsWith("image-url-")
+        ? "image-url-".length
+        : imageTopic.startsWith("image=")
+            ? "image=".length
+            : "image:".length;
+    const payload = imageTopic.slice(prefixLength);
+
+    if (payload.startsWith("http://") || payload.startsWith("https://")) {
+        return payload;
+    }
+
+    try {
+        const decoded = Buffer.from(payload, "base64url").toString("utf8");
+        return decoded.startsWith("http://") || decoded.startsWith("https://") ? decoded : undefined;
+    } catch {
+        return undefined;
+    }
+}
+
+function isImageTopic(topic: string): boolean {
+    return topic.startsWith("image-url-") || topic.startsWith("image=") || topic.startsWith("image:");
+}
+
+function getImageUrlFromDescription(description: string | null): string | undefined {
+    if (!description) return undefined;
+
+    const markdownImage = description.match(/!\[[^\]]*\]\((https?:\/\/[^)\s]+)\)/i);
+    if (markdownImage?.[1]) return markdownImage[1];
+
+    const htmlImage = description.match(/<img[^>]+src=["'](https?:\/\/[^"']+)["']/i);
+    if (htmlImage?.[1]) return htmlImage[1];
+
+    const directImageUrl = description.match(
+        /https?:\/\/\S+\.(?:png|jpe?g|gif|webp|svg)(?:[?#]\S*)?/i
+    );
+    return directImageUrl?.[0]?.replace(/[),.;]+$/, "");
+}
+
+function removeImageMarkup(description: string): string {
+    return description
+        .replace(/!\[[^\]]*\]\(https?:\/\/[^)\s]+\)/gi, "")
+        .replace(/<img[^>]*>/gi, "")
+        .trim();
 }
 
 function parseProjectDate(dateStr: string): number {
@@ -54,6 +108,12 @@ export default async function ProjectsSection({ data = DATA }: { data?: ResumeDa
                 .filter((repo) => repo.topics && repo.topics.includes("showcase"))
                 .map((repo) => {
                     const preview = (projectPreviews as Record<string, { image?: string; video?: string }>)[repo.name] || {};
+                    const imageLink = getImageUrlFromTopics(repo.topics)
+                        || getImageUrlFromDescription(repo.description);
+                    const image = preview.image || imageLink || "";
+                    const description = repo.description
+                        ? removeImageMarkup(repo.description)
+                        : "No description provided.";
 
                     const pushedDate = new Date(repo.pushed_at);
                     const datesStr = pushedDate.toLocaleDateString("en-US", {
@@ -64,7 +124,9 @@ export default async function ProjectsSection({ data = DATA }: { data?: ResumeDa
                     const techSet = new Set<string>();
                     if (repo.language) techSet.add(repo.language);
                     if (repo.topics) {
-                        repo.topics.forEach(topic => techSet.add(topic));
+                        repo.topics
+                            .filter((topic) => topic !== "showcase" && !isImageTopic(topic))
+                            .forEach(topic => techSet.add(topic));
                     }
                     const technologies = Array.from(techSet);
 
@@ -87,9 +149,10 @@ export default async function ProjectsSection({ data = DATA }: { data?: ResumeDa
                         href: repo.homepage || repo.html_url,
                         dates: datesStr,
                         active: true,
-                        description: repo.description || "No description provided.",
+                        description,
                         technologies,
-                        image: preview.image || "",
+                        image,
+                        imageLink,
                         video: preview.video || "",
                         links,
                         timestamp: new Date(repo.pushed_at).getTime()
@@ -112,6 +175,7 @@ export default async function ProjectsSection({ data = DATA }: { data?: ResumeDa
             description: proj.description,
             technologies: proj.technologies,
             image: proj.image || "",
+            imageLink: undefined,
             video: proj.video || "",
             links: proj.links.map(l => ({
                 icon: l.icon,
@@ -156,7 +220,7 @@ export default async function ProjectsSection({ data = DATA }: { data?: ResumeDa
                         </p>
                     </div>
                 </div>
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 max-w-[800px] mx-auto auto-rows-fr">
+                <ProjectGrid>
                     {mergedProjects.map((project, id) => (
                         <BlurFade
                             key={project.title}
@@ -171,12 +235,13 @@ export default async function ProjectsSection({ data = DATA }: { data?: ResumeDa
                                 dates={project.dates}
                                 tags={project.technologies}
                                 image={project.image}
+                                imageLink={project.imageLink}
                                 video={project.video}
                                 links={project.links}
                             />
                         </BlurFade>
                     ))}
-                </div>
+                </ProjectGrid>
             </div>
         </section>
     );

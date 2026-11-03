@@ -290,7 +290,7 @@ export const DATA = {
       dates: "Aug 2025",
       active: true,
       description:
-        "An enterprise-level customer feedback system featuring employee KPI tracking, outlet rankings, and statistical data visualization for Mystery Rooms.",
+        "An enterprise-level customer feedback system featuring employee KPI tracking, outlet rankings, and statistical data visualization for Mystery Rooms current serving to 2600+ customers* daily.",
       technologies: ["Next.js", "Redux", "D3.js", "SQL", "AWS", "Tailwind CSS", "TypeScript"],
       links: [
         {

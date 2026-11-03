@@ -22,5 +22,8 @@
   },
   "Jewels-Team": {
     "image": "/jwell_project.png"
+  },
+  "activity-heatmap": {
+    "image": "/npm-package-activity-heat-map.png"
   }
 }
