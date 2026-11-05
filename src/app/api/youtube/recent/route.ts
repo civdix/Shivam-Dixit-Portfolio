@@ -36,9 +36,16 @@ async function isShort(videoId: string): Promise<boolean> {
   }
 
   const html = await response.text();
-  const duration = html.match(/"lengthSeconds":"(\d+)"/)?.[1];
 
-  return duration !== undefined && Number(duration) <= 60;
+  // Shorts can be up to three minutes long, so duration alone is not a
+  // reliable way to distinguish them from regular videos.
+  return (
+    /"isShorts"\s*:\s*true/.test(html) ||
+    /"canonicalBaseUrl"\s*:\s*"\/shorts\//.test(html) ||
+    /<link[^>]+rel=["']canonical["'][^>]+href=["']https:\/\/www\.youtube\.com\/shorts\//i.test(
+      html,
+    )
+  );
 }
 
 export async function GET() {
